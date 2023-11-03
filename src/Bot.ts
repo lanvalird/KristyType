@@ -8,13 +8,30 @@ import dotenv = require('dotenv');
 dotenv.config()
 
 // IMPORT CONSTANTS FROM .env
-// Bot
-const BOT_TOKEN = process.env.BOT_TOKEN;
-export const BOT_VERSION = process.env.BOT_VERSION;
-export const BOT_VERSION_STATUS = process.env.BOT_VERSION_STATUS;
-export const BOT_AUTHOR = process.env.BOT_AUTHOR;
 // Author
-export const AUTHOR_DISCORD_ID = process.env.AUTHOR_DISCORD_ID;
+export const AUTHOR = process.env.AUTHOR
+  || "undefined";
+export const AUTHOR_DISCORD_ID = process.env.AUTHOR_DISCORD_ID
+  || "undefined";
+// Bot
+const BOT_TOKEN = process.env.BOT_TOKEN
+  || "undefined";
+export const BOT_CLIENT_ID = process.env.BOT_CLIENT_ID
+  || "undefined";
+export const BOT_VERSION = process.env.BOT_VERSION
+  || "undefined";
+export const BOT_VERSION_STATUS = process.env.BOT_VERSION_STATUS
+  || "undefined";
+// Guild
+export const BOT_GUILD_ID = process.env.BOT_GUILD_ID
+  || "undefined";
+export const BOT_GUILD_INVITE_URL = process.env.BOT_GUILD_INVITE_URL
+  || "undefined";
+// Log
+export const BOT_LOG_CHANNEL_ID = process.env.BOT_LOG_CHANNEL_ID
+  || "undefined";
+export const BOT_LOG_PREFIX = process.env.BOT_LOG_PREFIX
+  || "undefined";
 
 printLog("запускаю...");
 
@@ -36,15 +53,24 @@ try {
   console.error(e);
 }
 
-printLog("вхожу...");
-client.login(BOT_TOKEN).catch(() => {
-  printLog("невалидный токен?", printLogColorType.getError())
-  printLog("завершаю выполнение через 3 секунды...", printLogColorType.getError())
-  setTimeout(() => {
-    printLog("завершение процесса...")
+export const printStartError = (invalidArg: string, error?: Error) => {
+  if (error) {
+    printLog(`получила ошибку: ${error.name}`, printLogColorType.getError())
+    printLog(` | ${error.message}`, printLogColorType.getError())
+  }
+  printLog(`невалидный ${invalidArg}?`, printLogColorType.getError())
+  printLog("завершение процесса...")
 
-    process.exit();
-  }, 3000)
-})
+  process.exit();
+}
+
+printLog("проверяю ENV файл (BOT_GUILD_ID и BOT_LOG_CHANNEL_ID)...");
+if (BOT_LOG_CHANNEL_ID == "undefined" || BOT_GUILD_ID == "undefined") {
+  printLog("Проверьте ENV файл на наличие ошибок!", printLogColorType.getError());
+  printStartError('BOT_GUILD_ID или BOT_LOG_CHANNEL_ID');
+}
+
+printLog("вхожу...");
+client.login(BOT_TOKEN).catch(e => printStartError("токен", e));
 
 export { printLog };

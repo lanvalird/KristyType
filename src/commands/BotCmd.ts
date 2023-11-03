@@ -5,7 +5,7 @@ import {
     EmbedBuilder,
 } from "discord.js";
 import { Command } from "../Command";
-import { BOT_AUTHOR, BOT_VERSION, BOT_VERSION_STATUS } from "../Bot";
+import { AUTHOR, BOT_VERSION, BOT_VERSION_STATUS } from "../Bot";
 
 export const BotCmd: Command = {
     name: "bot",
@@ -40,7 +40,7 @@ export const BotCmd: Command = {
                 },
                 {
                     name: "Автор",
-                    value: `\`\`\`${BOT_AUTHOR}\`\`\``,
+                    value: `\`\`\`${AUTHOR}\`\`\``,
                     inline: true,
                 },
                 {

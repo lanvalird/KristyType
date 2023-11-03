@@ -1,6 +1,6 @@
 import { ActivityType, Client, Events } from "discord.js";
 import { Commands } from "../Commands";
-import { BOT_AUTHOR, BOT_VERSION, BOT_VERSION_STATUS, printLog } from "../Bot";
+import { AUTHOR, BOT_VERSION, BOT_VERSION_STATUS, printLog } from "../Bot";
 import { printLogColorType } from "../utils/console";
 
 export default (client: Client): void => {
@@ -47,7 +47,7 @@ export default (client: Client): void => {
           "✊ Мотивируйся",
           "✊ Забудь о проблемах",
           `playing version ${BOT_VERSION}-${BOT_VERSION_STATUS} (last?)`,
-          `By ${BOT_AUTHOR}`,
+          `By ${AUTHOR}`,
           `watching server "${client.guilds.cache.at(
             randomIntFromInterval(0, client.guilds.cache.size - 1),
           )?.name}"?`,

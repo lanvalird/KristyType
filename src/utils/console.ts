@@ -1,4 +1,4 @@
-import { log_prefix } from "../config.json";
+import { BOT_LOG_PREFIX } from "../Bot";
 
 export const printLogColorType = {
   getDefault: () => {
@@ -15,5 +15,5 @@ export function printLog(message: string, type?: string) {
   if (!type) {
     type = printLogColorType.getDefault();
   }
-  console.log(log_prefix + type + message + "\x1b[0m");
+  console.log(BOT_LOG_PREFIX + type + message + "\x1b[0m");
 }

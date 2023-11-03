@@ -7,7 +7,7 @@ import {
   PartialMessage,
   TextChannel,
 } from "discord.js";
-import { guildId, logChannelId } from "../config.json";
+import { BOT_GUILD_ID, BOT_LOG_CHANNEL_ID } from "../Bot";
 
 export default (client: Client): void => {
   try {
@@ -97,7 +97,7 @@ const sendMsgLogs = (
     }
   }
 
-  (m.client.channels.cache.get(logChannelId) as TextChannel).send({
+  (m.client.channels.cache.get(BOT_LOG_CHANNEL_ID) as TextChannel).send({
     embeds: [
       new EmbedBuilder()
         .setColor(color)
@@ -105,7 +105,7 @@ const sendMsgLogs = (
           name: `${m.author?.username} (${m.author?.id})`,
           iconURL: m.author?.avatarURL() || m.author?.defaultAvatarURL,
         })
-        .setTitle(`${m.client.guilds.cache.get(guildId)?.name}, встречай!`)
+        .setTitle(`${m.client.guilds.cache.get(BOT_GUILD_ID)?.name}, встречай!`)
         .setDescription(
           `Я узнала, что было __*${reason}*__ сообщение от ${m.author} на *${m.guild
           }* (${m.guildId}) в канале "[${(m.channel as TextChannel).name}](${m.url
