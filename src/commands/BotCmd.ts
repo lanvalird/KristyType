@@ -55,7 +55,7 @@ export const BotCmd: Command = {
                 },
                 {
                     name: "Благодарность",
-                    value: "```FOCKUSTY```",
+                    value: "```@fockusty```",
                     inline: true,
                 },
             ]);

@@ -1,7 +1,9 @@
 import { ActivityType, Client, Events } from "discord.js";
 import { Commands } from "../Commands";
-import { AUTHOR, BOT_VERSION, BOT_VERSION_STATUS, printLog } from "../Bot";
+import { printLog, randomIntFromInterval } from "../Bot";
 import { printLogColorType } from "../utils/console";
+import activities from "../db/activities.json"
+import krCodeTranslator from "../utils/krCodeTranslator";
 
 export default (client: Client): void => {
   client.on(Events.ClientReady, async () => {
@@ -21,41 +23,8 @@ export default (client: Client): void => {
 
     setInterval(
       () => {
-        const activities: string[] = [
-          "TypeScript Edition",
-          "watching Life, love, death... Loop...",
-          "watching Жизнь, любовь, смерть... Круговорот...",
-          "watching Неßа, Лайва, Вßерт... Цiкл...",
-          "Lots of activities",
-          "playing for you...",
-          '🍬 "Candy-Candy"!"',
-          "😒 Спрэйт...",
-          "EXA! Oops...",
-          "OwO",
-          "Мб устроим пати?",
-          "Горжусь тем, что из Банитеи",
-          "Хэйле! Я - Крïстi, нектö Бот",
-          "Привет! Я - Кристи, милый бот",
-          "Hello! I am Kristy, the cute bot",
-          "Spaaaaaaaaaaaaaaace stroke",
-          "Ландыши, ландыши...",
-          "Мне нравятся фиалки, Вам?",
-          "Ой, а я забыла",
-          "✊ Я сильная",
-          "✊ Ты сильный",
-          "✊ Ты сильная",
-          "✊ Мотивируйся",
-          "✊ Забудь о проблемах",
-          `playing version ${BOT_VERSION}-${BOT_VERSION_STATUS} (last?)`,
-          `By ${AUTHOR}`,
-          `watching server "${client.guilds.cache.at(
-            randomIntFromInterval(0, client.guilds.cache.size - 1),
-          )?.name}"?`,
-          `watching ${client.guilds.cache.size} servers...`,
-        ];
 
-        let activity =
-          activities[randomIntFromInterval(0, activities.length - 1)];
+        let activity = activities[randomIntFromInterval(0, activities.length - 1)];
         let activityType: ActivityType = 0;
         if (activity.startsWith("playing ")) {
           activity = activity.replace("playing ", "");
@@ -66,9 +35,14 @@ export default (client: Client): void => {
         } else if (activity.startsWith("listening ")) {
           activity = activity.replace("listening ", "");
           activityType = ActivityType.Listening;
+        } else if (activity.startsWith("competing ")) {
+          activity = activity.replace("competing ", "");
+          activityType = ActivityType.Competing;
         } else {
           activityType = ActivityType.Custom;
         }
+
+        activity = krCodeTranslator("KrCodeToString", activity, client);
 
         client.user?.setActivity(activity, {
           type: activityType,
@@ -92,8 +66,3 @@ export default (client: Client): void => {
     );
   });
 };
-
-function randomIntFromInterval(min: number, max: number) {
-  // min and max included
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}

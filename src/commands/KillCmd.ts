@@ -28,7 +28,7 @@ export const KillCmd: Command = {
 
         if (interaction.user.id != AUTHOR_DISCORD_ID) {
             await interaction.reply({
-                content: `Ты не похож на <#${AUTHOR_DISCORD_ID}>! Уйди!!!!!!!`
+                content: `Ты не похож на <@${AUTHOR_DISCORD_ID}>! Уйди!!!!!!!`
             });
 
             return;
@@ -39,7 +39,7 @@ export const KillCmd: Command = {
         });
 
         let exitSeconds = 30;
-        printLog(`бот выключится после ${exitSeconds}-секундного бездействия!`, printLogColorType.getError());
+        printLog(`бот выключится после ${exitSeconds} секунд!`, printLogColorType.getError());
 
         setInterval(async () => {
             if (exitSeconds <= 0) {
