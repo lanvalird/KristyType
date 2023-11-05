@@ -63,6 +63,6 @@
   "By <kr_bot_author>",
   "Random name: <kr_f_rnd_name>",
   "watching anime \"<kr_f_rnd_anime>\"",
-  "watching server \"<kr_f_rnd_server>\"",
-  "watching <kr_f_servers_count> servers..."
+  "watching server \"<kr_f_rnd_guild>\"",
+  "watching <kr_f_guilds_count> servers..."
 ]

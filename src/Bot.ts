@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import ready from "./listeners/ready";
 import messagesListener from "./listeners/messagesListener";
 import interactionCreate from "./listeners/interactionCreateListener";
-// import voiceChannelsListener from "./listeners/voiceChannelsListener";
+import voiceChannelsListener from "./listeners/voiceChannelsListener";
 
 dotenv.config()
 
@@ -41,7 +41,7 @@ try {
   interactionCreate(client);
   messagesListener(client);
   // Реализовать при помощи команды
-  // voiceChannelsListener(client);
+  voiceChannelsListener(client);
 } catch (e) {
   console.error(e);
 }
@@ -68,6 +68,8 @@ client.login(BOT_TOKEN).catch(e => printStartError("токен", e));
 
 export { printLog };
 export const randomIntFromInterval = (min: number, max: number) => {
-  // min and max included
-  return Math.floor(Math.random() * (max - min + 1) + min);
+  min = Math.ceil(min);
+  max = Math.floor(max);
+
+  return Math.floor(Math.random() * (max - min + 1) + min)
 }

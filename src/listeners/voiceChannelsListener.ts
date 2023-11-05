@@ -17,72 +17,80 @@
 // В  Р А З Р А Б О Т К Е.   В  Р А З Р А Б О Т К Е.   В  Р А З Р А Б О Т К Е.   В  Р А З Р А Б О Т К Е.   В  Р А З Р А Б О Т К Е.
 //
 
-import { AudioPlayerStatus, NoSubscriberBehavior, createAudioPlayer, createAudioResource, getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
-import { printLog } from "../Bot";
-import { Client, Events } from "discord.js";
-import path from "path";
+import { AudioPlayerStatus, NoSubscriberBehavior, createAudioPlayer, createAudioResource, joinVoiceChannel } from "@discordjs/voice";
+import { AUTHOR_DISCORD_ID, randomIntFromInterval } from "../Bot";
+import { Client, Events, VoiceState } from "discord.js";
+import fs from 'node:fs';
+import path from 'node:path';
+
 
 export default (client: Client): void => {
   client.on(Events.VoiceStateUpdate, async (oldVS, vs) => {
-    if (vs.member?.id == client.user?.id) return;
-    printLog("Зафиксировала изменения в войс-каналах");
+    if (vs.member?.id != AUTHOR_DISCORD_ID) return;
 
+    if (oldVS.channelId === null) connectionHelper(vs)
+    else if (vs.channelId === null) connectionHelper(oldVS, true)
+    else if (!(vs.channelId === oldVS.channelId)) {
+      connectionHelper(oldVS, true);
+      connectionHelper(vs);
+    }
+  });
+};
+
+const connectionHelper = (vs: VoiceState, off?: boolean) => {
+  if (vs.guild.id && vs.channel?.id) {
     const player = createAudioPlayer({
       behaviors: {
         noSubscriber: NoSubscriberBehavior.Pause,
       },
     });
 
-    player.on(AudioPlayerStatus.Idle, async () => {
-      await player.stop();
-    })
-
-    if (vs.channelId === null) oldVS.channel?.send("Пока!")
-      .catch();
-    else if (oldVS.channelId === null) vs.channel?.send("Привет, ты не против, если я посижу тут с тобой?")
-      .catch();
-    else {
-      try {
-        vs.channel?.send("Ты переместился?");
-      } catch (e) {
-        const connection = getVoiceConnection(oldVS.guild.id);
-        connection?.destroy();
-      }
+    const musicsPath = path.join(__dirname, '../lMusic');
+    const formatsFile: string[] = [".mpeg", ".mp3", ".mp4", ".opus", ".acc"]
+    const musicsFiles: string[] = [];
+    for (let i = 0; i < formatsFile.length; i++) {
+      fs.readdirSync(musicsPath).filter(
+        file => file
+          .endsWith(formatsFile[i])
+      )
+        .forEach(
+          e => {
+            musicsFiles.push(e);
+          }
+        )
     }
+    player.play(
+      createAudioResource(
+        path.join(
+          musicsPath,
+          musicsFiles.at(
+            randomIntFromInterval(0, musicsFiles.length - 1)
+          )
+          ??
+          "../lMusic/Wait.mp3"
+        )
+      )
+    );
 
-    if (vs.channel) {
-      const connection = joinVoiceChannel({
-        channelId: vs.channel?.id,
-        guildId: vs.channel?.guild.id,
-        adapterCreator: vs.channel?.guild.voiceAdapterCreator,
-      });
-      player.play(createAudioResource(path.join(__dirname, '../lMusic/Summer.mp3')));
-      connection.subscribe(player);
+    player.on('error', error => {
+      console.error(error);
+    });
 
-      player.on('error', error => {
-        console.error(error);
-      });
+    player.on(AudioPlayerStatus.Idle, () => {
+      player.stop()
+      connection.destroy()
+    });
 
-    } else {
-      try {
-        player.stop();
+    const connection = joinVoiceChannel({
+      channelId: vs.channel.id,
+      guildId: vs.channel.guild.id,
+      adapterCreator: vs.channel.guild.voiceAdapterCreator,
+    });
 
-        const connection = getVoiceConnection(oldVS.guild.id);
-        connection?.destroy();
-      } catch (e) {
-
-        const connection = getVoiceConnection(oldVS.guild.id);
-        connection?.destroy();
-
-        return;
-      }
+    connection.subscribe(player);
+    if (off === true) {
+      if (player) player.stop()
+      if (connection) connection.destroy()
     }
-
-    //     dbVoiceChannels.guildId.channelId;
-
-    //     fs.writeFile('db/voiceChannels.json', JSON.stringify(dbVoiceChannels), (err: any) => {
-    //         if (err) throw err;
-    //         console.log('The file has been saved!');
-    //     });
-  });
-};
+  }
+}

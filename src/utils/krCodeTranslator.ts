@@ -47,11 +47,11 @@ export default (type: string, str: string, c: Client): string => {
             value: process.env.BOT_GUILD_INVITE_URL || "<kr_err>"
         },
         {
-            key: "f_rnd_server",
-            value: c.guilds.cache.at(randomIntFromInterval(0, c.guilds.cache.size))?.name || "<kr_err>"
+            key: "f_rnd_guild",
+            value: c.guilds.cache.at(randomIntFromInterval(0, c.guilds.cache.size) - 1)?.name || "<kr_err>"
         },
         {
-            key: "f_servers_count",
+            key: "f_guilds_count",
             value: c.guilds.cache.size.toString() || "<kr_err>"
         },
     ]

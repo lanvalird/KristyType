@@ -11,6 +11,11 @@ export default (client: Client): void => {
 
     printLog(`вошла... ${client.user.username}... Подготавливаюсь...`);
 
+    // printLog("Я на вот таких серверах...")
+    // client.guilds.cache.forEach(e => {
+    //   printLog("  " + e.name, printLogColorType.getSuccess());
+    // })
+
     client.application.commands.set(Commands);
 
     client.user.setStatus("dnd");
@@ -57,11 +62,15 @@ export default (client: Client): void => {
     let allMembersCount: number = 0;
     printLog(
       `подготовилась и теперь готова к приключениям! Кстати, я на ${client.guilds.cache.size
-      } серверах, где в общей сумме ${(client.guilds.cache.forEach((g) => {
-        allMembersCount += g.memberCount;
-      }),
-        allMembersCount)
-      } участников (участники могут повторяться)`,
+      } серверах, где в среднем ~${(
+        client.guilds.cache.forEach(
+          (g) => {
+            allMembersCount += g.memberCount;
+          }
+        ),
+        Math.round(allMembersCount / client.guilds.cache.size)
+      )
+      } участников`,
       printLogColorType.getSuccess(),
     );
   });
