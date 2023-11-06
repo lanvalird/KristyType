@@ -3,7 +3,7 @@ import { printLog, printLogColorType } from "./utils/console";
 import dotenv from 'dotenv';
 import ready from "./listeners/ready";
 import messagesListener from "./listeners/messagesListener";
-import interactionCreate from "./listeners/interactionCreateListener";
+import slashListener from "./listeners/slashListener";
 import voiceChannelsListener from "./listeners/voiceChannelsListener";
 import modalListener from "./listeners/modalListener";
 
@@ -39,7 +39,7 @@ const client = new Client({
 
 try {
   ready(client);
-  interactionCreate(client);
+  slashListener(client);
   messagesListener(client);
   modalListener(client);
   // Реализовать при помощи команды

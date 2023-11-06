@@ -21,7 +21,8 @@ export const IdeaCmd: Command = {
       type: ApplicationCommandOptionType.String,
       description: "Заголовок твоей идеи",
       required: true,
-      maxLength: 56,
+      maxLength: 70,
+      minLength: 20
     },
   ],
   run: async (client: Client, interaction: CommandInteraction) => {
@@ -37,7 +38,10 @@ export const IdeaCmd: Command = {
             .setLabel("Заголовок твоей идеи (кратко)")
             .setPlaceholder("Добавить команду `/чипсы`")
             .setValue(interaction.options.get("title")?.value?.toString() || "")
-            .setStyle(TextInputStyle.Short)),
+            .setStyle(TextInputStyle.Short)
+            .setMaxLength(70)
+            .setMinLength(20)
+        ),
       new ActionRowBuilder<ModalActionRowComponentBuilder>()
         .addComponents(
           new TextInputBuilder()
@@ -45,6 +49,8 @@ export const IdeaCmd: Command = {
             .setLabel("Напиши подробно о своей идее")
             .setPlaceholder("Добавить команду, которая будет заставлять бота есть чипсы.")
             .setStyle(TextInputStyle.Paragraph)
+            .setMaxLength(600)
+            .setMinLength(20)
         )
     );
 

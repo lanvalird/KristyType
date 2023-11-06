@@ -24,6 +24,7 @@ export default (client: Client): void => {
           interaction.fields.getTextInputValue('ideaContent') || "Oops!",
         )
         .setThumbnail(interaction.guild?.iconURL() || null)
+        .setTimestamp()
         .addFields([
           {
             name: "Участник",
@@ -37,16 +38,21 @@ export default (client: Client): void => {
           },
         ]);
 
-      (client.channels.cache.get("1168953688799313981") as TextChannel).send({
+      (client.channels.cache.get("1171067195611164724") as TextChannel).send({
         embeds: [embed]
       }).then(async msg => {
+        await interaction.editReply({
+          content: "Добавляю реакции..."
+        });
         await msg.react("👍");
         await msg.react("👎");
         await msg.react("💘");
-        await (msg.channel as TextChannel).threads.create({
+        await interaction.editReply({
+          content: "Начинаю тред..."
+        });
+        await msg.startThread({
           name: interaction.fields.getTextInputValue('ideaTitle'),
-          autoArchiveDuration: ThreadAutoArchiveDuration.ThreeDays,
-          startMessage: msg
+          autoArchiveDuration: ThreadAutoArchiveDuration.ThreeDays
         })
 
         await interaction.editReply({
