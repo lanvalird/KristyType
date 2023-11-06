@@ -45,12 +45,12 @@ export const BotCmd: Command = {
                 },
                 {
                     name: "Языки",
-                    value: "```0.5 (RU 80%, EN 20%)````",
+                    value: "```WIP```",
                     inline: true,
                 },
                 {
                     name: "Последнее обновление",
-                    value: "```WIP```",
+                    value: "```Команда [/idea]```",
                     inline: true,
                 },
                 {

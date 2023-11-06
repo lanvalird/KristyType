@@ -5,6 +5,7 @@ import ready from "./listeners/ready";
 import messagesListener from "./listeners/messagesListener";
 import interactionCreate from "./listeners/interactionCreateListener";
 import voiceChannelsListener from "./listeners/voiceChannelsListener";
+import modalListener from "./listeners/modalListener";
 
 dotenv.config()
 
@@ -40,6 +41,7 @@ try {
   ready(client);
   interactionCreate(client);
   messagesListener(client);
+  modalListener(client);
   // Реализовать при помощи команды
   voiceChannelsListener(client);
 } catch (e) {
