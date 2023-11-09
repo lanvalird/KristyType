@@ -53,7 +53,7 @@ export default (client: Client): void => {
         await msg.startThread({
           name: interaction.fields.getTextInputValue('ideaTitle'),
           autoArchiveDuration: ThreadAutoArchiveDuration.ThreeDays
-        })
+        });
 
         await interaction.editReply({
           content: `Сообщение было отправлено (${msg.url})`
