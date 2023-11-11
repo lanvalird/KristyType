@@ -2,8 +2,12 @@ import { printLog, randomIntFromInterval } from "../Bot";
 import { Client } from "discord.js";
 import dotenv from 'dotenv';
 import { printLogColorType } from "./console";
+import arrNames = require("../db/names.json");
+import arrRec = require("../db/recomendations.json");
+import arrAnime = require("../db/animes.json");
 
 dotenv.config();
+
 
 type keyString = {
     key: string,
@@ -53,6 +57,18 @@ export default (type: string, str: string, c: Client): string => {
         {
             key: "f_guilds_count",
             value: c.guilds.cache.size.toString() || "<kr_err>"
+        },
+        {
+            key: "f_rnd_name",
+            value: arrNames[randomIntFromInterval(0, arrNames.length - 1)] || "<kr_err>"
+        },
+        {
+            key: "f_rnd_rec",
+            value: arrRec[randomIntFromInterval(0, arrRec.length - 1)] || "<kr_err>"
+        },
+        {
+            key: "f_rnd_anime",
+            value: arrAnime[randomIntFromInterval(0, arrAnime.length - 1)] || "<kr_err>"
         },
     ]
 
