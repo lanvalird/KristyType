@@ -1,12 +1,14 @@
 import { ActivityType, Client, Events } from "discord.js";
-import { Commands } from "../Commands";
-import { printLog, randomIntFromInterval } from "../Bot";
+import { Commands, GuildCommands } from "../Commands";
+import { BOT_GUILD_ID, printLog, randomIntFromInterval } from "../Bot";
 import { printLogColorType } from "../utils/console";
 import activities from "../db/activities.json"
+// import activities from "../db/lbd_activities.json"
 import krCodeTranslator from "../utils/krCodeTranslator";
 
 export default (client: Client): void => {
   client.on(Events.ClientReady, async () => {
+    // Бот авторизовался?
     if (!client.user || !client.application) return;
 
     printLog(`вошла... ${client.user.username}... Подготавливаюсь...`);
@@ -16,16 +18,20 @@ export default (client: Client): void => {
     //   printLog("  " + e.name, printLogColorType.getSuccess());
     // })
 
+    // РЕГИСТРАЦИЯ КОМАНД
     client.application.commands.set(Commands);
+    client.application.commands.set(GuildCommands, BOT_GUILD_ID);
 
+    // СМЕНА НА ПЕРВИЧНЫЙ СТАТУС
     client.user.setStatus("dnd");
-    client.user?.setActivity("🦢 KristyBot (TS)", {
+    client.user?.setActivity("🦢 KristyType", {
       type: ActivityType.Custom,
     });
     printLog(
       `сменила статус (${client.user.presence.status}), сбросила список команд и поставила базовую активность: "${client.user.presence.activities}".`,
     );
 
+    // КАЖДЫЕ N-СЕКУНДЫ СМЕНЯЕТ АКТИВНОСТЬ ИЗ СПИСКА АКТВИНОСТЕЙ
     setInterval(
       () => {
 

@@ -1,6 +1,7 @@
 # My files
 start.bat
 src/lMusic/*
+src/db/*_activities.json
 
 # Logs
 logs

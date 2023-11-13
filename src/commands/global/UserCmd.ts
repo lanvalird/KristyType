@@ -10,7 +10,7 @@ import {
   ApplicationCommandOptionType,
   GuildMember,
 } from "discord.js";
-import { Command } from "../Command";
+import { Command } from "../../Command";
 
 export const UserCmd: Command = {
   name: "user",

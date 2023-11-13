@@ -3,7 +3,7 @@ import {
   Client,
   Interaction,
 } from "discord.js";
-import { Commands } from "../Commands";
+import { Commands, GuildCommands } from "../Commands";
 
 export default (client: Client): void => {
   client.on("interactionCreate", async (interaction: Interaction) => {
@@ -18,11 +18,15 @@ const handleSlashCommand = async (
   interaction: CommandInteraction,
 ): Promise<void> => {
   const slashCommand = Commands.find((c) => c.name === interaction.commandName);
-  if (!slashCommand) {
-    interaction.followUp({ content: "oops!" });
+  const slashGuildCommand = GuildCommands.find((c) => c.name === interaction.commandName);
+
+  if (slashCommand) {
+    slashCommand.run(client, interaction);
+  } else if (slashGuildCommand) {
+    slashGuildCommand.run(client, interaction);
+  } else {
+    interaction.reply({ content: "oops!" });
 
     return;
   }
-
-  slashCommand.run(client, interaction);
 };

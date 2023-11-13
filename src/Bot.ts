@@ -9,24 +9,25 @@ import modalListener from "./listeners/modalListener";
 
 dotenv.config()
 
-// IMPORT CONSTANTS FROM .env
-// Author
+// ИМПОРТ ПЕРЕМЕННЫХ ОКРУЖЕНИЯ ИЗ .env
+// Автор
 export const AUTHOR = process.env.AUTHOR || "<kr_err:notvar>";
 export const AUTHOR_DISCORD_ID = process.env.AUTHOR_DISCORD_ID || "<kr_err:notvar>";
-// Bot
+// Бот
 const BOT_TOKEN = process.env.BOT_TOKEN || "<kr_err:notvar>";
 export const BOT_CLIENT_ID = process.env.BOT_CLIENT_ID || "<kr_err:notvar>";
 export const BOT_VERSION = process.env.BOT_VERSION || "<kr_err:notvar>";
 export const BOT_VERSION_STATUS = process.env.BOT_VERSION_STATUS || "<kr_err:notvar>";
-// Guild
+// Гильдия
 export const BOT_GUILD_ID = process.env.BOT_GUILD_ID || "<kr_err:notvar>";
 export const BOT_GUILD_INVITE_URL = process.env.BOT_GUILD_INVITE_URL || "<kr_err:notvar>";
-// Log
+// Логирование
 export const BOT_LOG_CHANNEL_ID = process.env.BOT_LOG_CHANNEL_ID || "<kr_err:notvar>";
 export const BOT_LOG_PREFIX = process.env.BOT_LOG_PREFIX || "<kr_err:notvar>";
 
 printLog("запускаю...");
 
+// ПРИСВАЕМ БОТУ ПРАВА
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -37,12 +38,14 @@ const client = new Client({
   ],
 });
 
+// TRY CATCH ТОЧНО РАБОТАЕТ?
 try {
   ready(client);
   slashListener(client);
   messagesListener(client);
   modalListener(client);
-  // Реализовать при помощи команды
+
+  // Нужны фиксы
   voiceChannelsListener(client);
 } catch (e) {
   console.error(e);

@@ -9,7 +9,7 @@ import {
   ActionRowBuilder,
   TextInputBuilder,
 } from "discord.js";
-import { Command } from "../Command";
+import { Command } from "../../Command";
 
 export const IdeaCmd: Command = {
   name: "idea",

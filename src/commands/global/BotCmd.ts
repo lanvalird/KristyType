@@ -4,8 +4,8 @@ import {
     ApplicationCommandType,
     EmbedBuilder,
 } from "discord.js";
-import { Command } from "../Command";
-import { AUTHOR, BOT_VERSION, BOT_VERSION_STATUS } from "../Bot";
+import { Command } from "../../Command";
+import { AUTHOR, BOT_VERSION, BOT_VERSION_STATUS } from "../../Bot";
 
 export const BotCmd: Command = {
     name: "bot",

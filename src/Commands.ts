@@ -1,11 +1,11 @@
 import { Command } from "./Command";
-import { BotCmd } from "./commands/BotCmd";
-import { HelloCmd } from "./commands/HelloCmd";
-import { KillCmd } from "./commands/KillCmd";
-import { MailToServerCmd } from "./commands/MailToServerCmd";
-import { ServerCmd } from "./commands/ServerCmd";
-import { IdeaCmd } from "./commands/IdeaCmd";
-import { UserCmd } from "./commands/UserCmd";
+import { BotCmd } from "./commands/global/BotCmd";
+import { HelloCmd } from "./commands/global/HelloCmd";
+import { KillCmd } from "./commands/guild/KillCmd";
+import { MailToServerCmd } from "./commands/global/MailToServerCmd";
+import { ServerCmd } from "./commands/global/ServerCmd";
+import { IdeaCmd } from "./commands/global/IdeaCmd";
+import { UserCmd } from "./commands/global/UserCmd";
 
 export const Commands: Command[] = [
     HelloCmd,
@@ -14,7 +14,9 @@ export const Commands: Command[] = [
     IdeaCmd,
     MailToServerCmd,
     BotCmd,
-    KillCmd
+
 ];
 
-export const GuildCommands: Command[] = [];
+export const GuildCommands: Command[] = [
+    KillCmd,
+];

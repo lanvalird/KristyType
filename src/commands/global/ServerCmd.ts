@@ -4,7 +4,7 @@ import {
   ApplicationCommandType,
   EmbedBuilder,
 } from "discord.js";
-import { Command } from "../Command";
+import { Command } from "../../Command";
 
 export const ServerCmd: Command = {
   name: "server",

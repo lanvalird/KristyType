@@ -5,9 +5,9 @@ import {
     EmbedBuilder,
     ActivityType,
 } from "discord.js";
-import { Command } from "../Command";
-import { printLog, printLogColorType } from "../utils/console";
-import { AUTHOR_DISCORD_ID } from "../Bot";
+import { Command } from "../../Command";
+import { printLog, printLogColorType } from "../../utils/console";
+import { AUTHOR_DISCORD_ID } from "../../Bot";
 
 export const KillCmd: Command = {
     name: "kill",
@@ -26,6 +26,7 @@ export const KillCmd: Command = {
             )
             .setThumbnail(client.user?.avatarURL() || null);
 
+        console.log("776");
         if (interaction.user.id != AUTHOR_DISCORD_ID) {
             await interaction.reply({
                 content: `Ты не похож на <@${AUTHOR_DISCORD_ID}>! Уйди!!!!!!!`
@@ -33,6 +34,8 @@ export const KillCmd: Command = {
 
             return;
         }
+        console.log("777");
+
         await interaction.reply({
             ephemeral: true,
             embeds: [content],
