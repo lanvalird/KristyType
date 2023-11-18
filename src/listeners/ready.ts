@@ -1,9 +1,11 @@
 import { ActivityType, Client, Events } from "discord.js";
 import { Commands, GuildCommands } from "../Commands";
-import { BOT_GUILD_ID, printLog, randomIntFromInterval } from "../Bot";
+import { BOT_GUILD_ID, BOT_VERSION, BOT_VERSION_STATUS, printLog, randomIntFromInterval } from "../Bot";
 import { printLogColorType } from "../utils/console";
 import activities from "../db/activities.json"
+// ОСОБЫЕ ВАРИАНТЫ
 // import activities from "../db/lbd_activities.json"
+// import activities from "../db/vbd_activities.json"
 import krCodeTranslator from "../utils/krCodeTranslator";
 
 export default (client: Client): void => {
@@ -13,14 +15,36 @@ export default (client: Client): void => {
 
     printLog(`вошла... ${client.user.username}... Подготавливаюсь...`);
 
+    const oldGuildsCache: { id: string; nickname: string | null; }[] = [];
+    client.guilds.cache.forEach(g => {
+      if (!client.user?.id) return;
+
+      oldGuildsCache.push({
+        id: g.id,
+        nickname: g.members.cache.get(client.user?.id)?.nickname || null
+      })
+    })
+    const setGuildsNick = (nick: string | null, id?: string) => {
+      if (!client.user?.id) return;
+      if (id) {
+        client.guilds.cache.get(id)?.members.cache.get(client.user?.id)?.setNickname(nick)
+      } else {
+        client.guilds.cache.forEach(g => {
+          g.members.cache.get(g.client.user.id)?.setNickname(nick)
+        })
+      }
+    }
+
+    await setGuildsNick(`Kristy [↻] ~v${BOT_VERSION + BOT_VERSION_STATUS.toLowerCase()}`);
+
     // printLog("Я на вот таких серверах...")
     // client.guilds.cache.forEach(e => {
     //   printLog("  " + e.name, printLogColorType.getSuccess());
     // })
 
     // РЕГИСТРАЦИЯ КОМАНД
-    client.application.commands.set(Commands);
-    client.application.commands.set(GuildCommands, BOT_GUILD_ID);
+    await client.application.commands.set(Commands);
+    await client.application.commands.set(GuildCommands, BOT_GUILD_ID);
 
     // СМЕНА НА ПЕРВИЧНЫЙ СТАТУС
     client.user.setStatus("dnd");
@@ -66,6 +90,12 @@ export default (client: Client): void => {
     );
 
     let allMembersCount: number = 0;
+
+    oldGuildsCache.forEach(g => {
+      if (!client.user?.id) return;
+      setGuildsNick(g.nickname, g.id)
+    })
+
     printLog(
       `подготовилась и теперь готова к приключениям! Кстати, я на ${client.guilds.cache.size
       } серверах, где в среднем ~${(
