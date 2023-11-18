@@ -14,6 +14,12 @@ import { Command } from "../../Command";
 export const IdeaCmd: Command = {
   name: "idea",
   description: "Suggest your idea.",
+  nameLocalizations: {
+    "ru": "идея",
+  },
+  descriptionLocalizations: {
+    "ru": "Предложи свою идею.",
+  },
   type: ApplicationCommandType.ChatInput,
   options: [
     {

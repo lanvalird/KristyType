@@ -10,6 +10,12 @@ import { AUTHOR, BOT_VERSION, BOT_VERSION_STATUS } from "../../Bot";
 export const BotCmd: Command = {
     name: "bot",
     description: "Returns info about bot.",
+    nameLocalizations: {
+        "ru": "бот",
+    },
+    descriptionLocalizations: {
+        "ru": "Возвращает инфу о боте.",
+    },
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: CommandInteraction) => {
         const content = new EmbedBuilder()

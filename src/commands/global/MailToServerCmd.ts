@@ -11,6 +11,12 @@ import { Command } from "../../Command";
 export const MailToServerCmd: Command = {
   name: "mailtoserver",
   description: "Send message... On another server!",
+  nameLocalizations: {
+    "ru": "письмонасервер",
+  },
+  descriptionLocalizations: {
+    "ru": "Отправить сообщение... На другой сервер!",
+  },
   type: ApplicationCommandType.ChatInput,
   options: [
     {
@@ -58,7 +64,7 @@ export const MailToServerCmd: Command = {
     ) as TextChannel).send({
       content: interaction.options.get("message")?.value?.toString() || "Вам пытались отправить сообщение, но этот формат не поддерживается"
     });
-    
+
     interaction.reply({
       embeds: [content],
       ephemeral: true,

@@ -10,8 +10,14 @@ import { printLog, printLogColorType } from "../../utils/console";
 import { AUTHOR_DISCORD_ID } from "../../Bot";
 
 export const KillCmd: Command = {
-    name: "kill",
-    description: "Kill bot...",
+    name: "sleep",
+    description: "Good night...",
+    nameLocalizations: {
+        "ru": "уложить",
+    },
+    descriptionLocalizations: {
+        "ru": "Сладких снов...",
+    },
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: CommandInteraction) => {
         const content = new EmbedBuilder()
@@ -26,7 +32,6 @@ export const KillCmd: Command = {
             )
             .setThumbnail(client.user?.avatarURL() || null);
 
-        console.log("776");
         if (interaction.user.id != AUTHOR_DISCORD_ID) {
             await interaction.reply({
                 content: `Ты не похож на <@${AUTHOR_DISCORD_ID}>! Уйди!!!!!!!`
@@ -34,7 +39,6 @@ export const KillCmd: Command = {
 
             return;
         }
-        console.log("777");
 
         await interaction.reply({
             ephemeral: true,

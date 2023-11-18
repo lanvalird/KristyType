@@ -9,6 +9,12 @@ import { Command } from "../../Command";
 export const ServerCmd: Command = {
   name: "server",
   description: "Returns info about server.",
+  nameLocalizations: {
+    "ru": "сервер",
+  },
+  descriptionLocalizations: {
+    "ru": "Возвращает инфу о сервере.",
+  },
   type: ApplicationCommandType.ChatInput,
   run: async (client: Client, interaction: CommandInteraction) => {
     const content = new EmbedBuilder()

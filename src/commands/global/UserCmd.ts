@@ -15,6 +15,12 @@ import { Command } from "../../Command";
 export const UserCmd: Command = {
   name: "user",
   description: "Returns info about user.",
+  nameLocalizations: {
+    "ru": "пользователь",
+  },
+  descriptionLocalizations: {
+    "ru": "Возвращает инфу о пользователе.",
+  },
   type: ApplicationCommandType.ChatInput,
   options: [
     {
