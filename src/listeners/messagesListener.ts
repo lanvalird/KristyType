@@ -1,4 +1,5 @@
 import {
+  ActivityType,
   Client,
   ColorResolvable,
   EmbedBuilder,
@@ -7,13 +8,22 @@ import {
   PartialMessage,
   TextChannel,
 } from "discord.js";
-import { BOT_GUILD_ID, BOT_LOG_CHANNEL_ID } from "../Bot";
+import { BOT_GUILD_ID, BOT_LOG_CHANNEL_ID, printLog, randomIntFromInterval } from "../Bot";
+import activities from "../db/activities.json";
+import krCodeTranslator from "../utils/krCodeTranslator";
+
 
 export default (client: Client): void => {
   try {
     client.on(Events.MessageCreate, (m) => sendMsgLogs(m, "send"));
     client.on(Events.MessageUpdate, (m, nm) => sendMsgLogs(m, "update", nm));
     client.on(Events.MessageDelete, (m) => sendMsgLogs(m, "delete"));
+    client.on(Events.MessageCreate, (m) => {
+      if (m.author.id != "1122199797449904179") return; // TheVoid
+      if (m.channelId != "1175738843203391550") return; // та-самая-пати
+
+      sendActivityForTheVoid(m)
+    });
   } catch (e: unknown) {
     console.log(e);
   }
@@ -117,3 +127,32 @@ const sendMsgLogs = (
     ],
   });
 };
+
+const sendActivityForTheVoid = (m: Message) => {
+  let activity = activities[randomIntFromInterval(0, activities.length - 1)];
+  let activityType: ActivityType = 0;
+  if (activity.startsWith("playing ")) {
+    activity = activity.replace("playing ", "Играю в ");
+    activityType = ActivityType.Playing;
+  } else if (activity.startsWith("watching ")) {
+    activity = activity.replace("watching ", "Смотрю ");
+    activityType = ActivityType.Watching;
+  } else if (activity.startsWith("listening ")) {
+    activity = activity.replace("listening ", "Слушаю ");
+    activityType = ActivityType.Listening;
+  } else if (activity.startsWith("competing ")) {
+    activity = activity.replace("competing ", "Соревнуюсь в ");
+    activityType = ActivityType.Competing;
+  } else {
+    activityType = ActivityType.Custom;
+  }
+
+  activity = krCodeTranslator("KrCodeToString", activity, m.client);
+
+  setTimeout(() => {
+    (m.channel as TextChannel).send(activity)
+  },
+    1000
+  )
+  printLog(`изменила активность ("${activityType}: ${activity}")`);
+}
