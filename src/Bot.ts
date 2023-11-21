@@ -8,6 +8,7 @@ import messagesListener from "./listeners/messagesListener";
 import slashListener from "./listeners/slashListener";
 import voiceChannelsListener from "./listeners/voiceChannelsListener";
 import modalListener from "./listeners/modalListener";
+import presencesListener from './listeners/presencesListener';
 
 
 // ИМПОРТ ПЕРЕМЕННЫХ ОКРУЖЕНИЯ ИЗ .env
@@ -36,15 +37,20 @@ const client = new Client({
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildPresences,
   ],
 });
 
 // TRY CATCH ТОЧНО РАБОТАЕТ?
 try {
   ready(client);
+
   slashListener(client);
-  messagesListener(client);
   modalListener(client);
+
+  messagesListener(client);
+  // For ~ The Void
+  presencesListener(client);
 
   // Нужны фиксы
   voiceChannelsListener(client);
