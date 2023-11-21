@@ -8,7 +8,7 @@ import {
   PartialMessage,
   TextChannel,
 } from "discord.js";
-import { BOT_GUILD_ID, BOT_LOG_CHANNEL_ID, printLog, randomIntFromInterval } from "../Bot";
+import { AUTHOR_DISCORD_ID, BOT_GUILD_ID, BOT_LOG_CHANNEL_ID, randomIntFromInterval } from "../Bot";
 import activities from "../db/activities.json";
 import krCodeTranslator from "../utils/krCodeTranslator";
 
@@ -19,8 +19,10 @@ export default (client: Client): void => {
     client.on(Events.MessageUpdate, (m, nm) => sendMsgLogs(m, "update", nm));
     client.on(Events.MessageDelete, (m) => sendMsgLogs(m, "delete"));
     client.on(Events.MessageCreate, (m) => {
-      if (m.author.id != "1122199797449904179") return; // TheVoid
       if (m.channelId != "1175738843203391550") return; // та-самая-пати
+      if (!((m.author.id == "1122199797449904179") /* TheVoid */ || (m.author.id == AUTHOR_DISCORD_ID))) {
+        return;
+      }
 
       sendActivityForTheVoid(m)
     });
@@ -128,7 +130,42 @@ const sendMsgLogs = (
   });
 };
 
-const sendActivityForTheVoid = (m: Message) => {
+let theVoidChatting = true;
+const sendActivityForTheVoid = async (m: Message) => {
+  if (m.author.id == AUTHOR_DISCORD_ID) {
+    if (m.content.toLowerCase() == "стоп") {
+      if (!theVoidChatting) {
+        await (m.channel as TextChannel).send({
+          content: "Переписка уже остановлена",
+          reply: {
+            messageReference: m
+          }
+        });
+
+        return;
+      };
+
+      theVoidChatting = false;
+
+      await (m.channel as TextChannel).send({
+        content: "Блокирую получение сообщений... (10 секунд)",
+        reply: {
+          messageReference: m
+        }
+      }).then(m => m.react("🚫"));
+
+
+      await setTimeout(() => theVoidChatting = true, 10000);
+
+      return;
+    }
+
+    return;
+  }
+
+  if (!theVoidChatting) return;
+  theVoidChatting = false;
+
   m.channel.sendTyping();
 
   let activity = activities[randomIntFromInterval(0, activities.length - 1)];
@@ -146,18 +183,21 @@ const sendActivityForTheVoid = (m: Message) => {
     activity = activity.replace("competing ", "Соревнуюсь в ");
     activityType = ActivityType.Competing;
   } else {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     activityType = ActivityType.Custom;
   }
 
   activity = krCodeTranslator("KrCodeToString", activity, m.client);
 
   setTimeout(() => {
-    let mId = m.guild?.members.cache.at(randomIntFromInterval(0, m.guild?.members.cache.size - 1))?.id;
-    while (mId === m.client.user.id) { mId = m.guild?.members.cache.at(randomIntFromInterval(0, m.guild?.members.cache.size - 1))?.id; }
-
-    (m.channel as TextChannel).send(`<@${mId}>, это посвящается тебе (пора глушить чат)\n> ${activity}`);
+    (m.channel as TextChannel).send({
+      content: `${activity}`,
+      reply: {
+        messageReference: m
+      }
+    });
+    theVoidChatting = true;
   },
     2000
   )
-  printLog(`изменила активность ("${activityType}: ${activity}")`);
 }
