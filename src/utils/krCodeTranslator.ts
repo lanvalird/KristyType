@@ -1,12 +1,9 @@
 import { printLog, randomIntFromInterval } from "../Bot";
 import { Client } from "discord.js";
-import dotenv from 'dotenv';
 import { printLogColorType } from "./console";
 import arrNames = require("../db/names.json");
 import arrRec = require("../db/recomendations.json");
 import arrAnime = require("../db/animes.json");
-
-dotenv.config();
 
 
 type keyString = {

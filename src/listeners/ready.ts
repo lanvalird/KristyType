@@ -86,7 +86,7 @@ export default (client: Client): void => {
         client.user?.setStatus;
         printLog(`изменила активность ("${activityType}: ${activity}")`);
       },
-      (1000 * 60) * 1,
+      1000 * 60 * 1,
     );
 
     let allMembersCount: number = 0;

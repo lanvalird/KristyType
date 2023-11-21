@@ -1,13 +1,14 @@
+import dotenv from 'dotenv';
+dotenv.config()
+
 import { Client, GatewayIntentBits } from "discord.js";
 import { printLog, printLogColorType } from "./utils/console";
-import dotenv from 'dotenv';
 import ready from "./listeners/ready";
 import messagesListener from "./listeners/messagesListener";
 import slashListener from "./listeners/slashListener";
 import voiceChannelsListener from "./listeners/voiceChannelsListener";
 import modalListener from "./listeners/modalListener";
 
-dotenv.config()
 
 // ИМПОРТ ПЕРЕМЕННЫХ ОКРУЖЕНИЯ ИЗ .env
 // Автор
@@ -72,7 +73,7 @@ printLog("вхожу...");
 client.login(BOT_TOKEN).catch(e => printStartError("токен", e));
 
 export { printLog };
-export const randomIntFromInterval = (min: number, max: number) => {
+export const randomIntFromInterval = (min: number, max: number): number => {
   // min = Math.ceil(min);
   // max = Math.floor(max);
 

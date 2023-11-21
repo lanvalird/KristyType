@@ -129,6 +129,8 @@ const sendMsgLogs = (
 };
 
 const sendActivityForTheVoid = (m: Message) => {
+  m.channel.sendTyping();
+
   let activity = activities[randomIntFromInterval(0, activities.length - 1)];
   let activityType: ActivityType = 0;
   if (activity.startsWith("playing ")) {
@@ -150,9 +152,12 @@ const sendActivityForTheVoid = (m: Message) => {
   activity = krCodeTranslator("KrCodeToString", activity, m.client);
 
   setTimeout(() => {
-    (m.channel as TextChannel).send(activity)
+    let mId = m.guild?.members.cache.at(randomIntFromInterval(0, m.guild?.members.cache.size - 1))?.id;
+    while (mId === m.client.user.id) { mId = m.guild?.members.cache.at(randomIntFromInterval(0, m.guild?.members.cache.size - 1))?.id; }
+
+    (m.channel as TextChannel).send(`<@${mId}>, это посвящается тебе (пора глушить чат)\n> ${activity}`);
   },
-    1000
+    2000
   )
   printLog(`изменила активность ("${activityType}: ${activity}")`);
 }
