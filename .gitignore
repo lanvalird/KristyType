@@ -3,9 +3,6 @@ start.bat
 src/lMusic/*
 src/db/*_activities.json
 
-#
-package_lock.json
-
 # Logs
 logs
 *.log
