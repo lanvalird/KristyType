@@ -1,16 +1,17 @@
 {
   "name": "kristytype",
-  "version": "1.0.5",
-  "description": "",
-  "main": "Bot.ts",
+  "version": "1.0.4.12",
+  "description": "Simple Discord Bot",
+  "main": "dist/Bot.js",
   "scripts": {
-    "start": "ts-node src/Bot.ts"
+    "start": "node .",
+    "dev": "ts-node src/Bot.ts",
+    "build": "tsc && echo Build done!"
   },
   "author": "aculaOne",
   "license": "MIT",
   "dependencies": {
-    "@discordjs/opus": "^0.9.0",
-    "@discordjs/voice": "^0.16.0",
+    "@discordjs/voice": "^0.16.1",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
     "ffmpeg-static": "^5.2.0",
