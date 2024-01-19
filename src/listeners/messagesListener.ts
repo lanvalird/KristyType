@@ -8,7 +8,7 @@ import {
   PartialMessage,
   TextChannel,
 } from "discord.js";
-import { AUTHOR_DISCORD_ID, BOT_GUILD_ID, BOT_LOG_CHANNEL_ID, randomIntFromInterval } from "../Bot";
+import { BOT_GUILD_ID, BOT_LOG_CHANNEL_ID, randomIntFromInterval } from "../Bot";
 import activities from "../db/activities.json";
 import krCodeTranslator from "../utils/krCodeTranslator";
 
@@ -18,9 +18,10 @@ export default (client: Client): void => {
     client.on(Events.MessageCreate, (m) => sendMsgLogs(m, "send"));
     client.on(Events.MessageUpdate, (m, nm) => sendMsgLogs(m, "update", nm));
     client.on(Events.MessageDelete, (m) => sendMsgLogs(m, "delete"));
+
     client.on(Events.MessageCreate, (m) => {
-      if (m.channelId != "1175738843203391550") return; // та-самая-пати
-      if (!((m.author.id == "1122199797449904179") /* TheVoid */ || (m.author.id == AUTHOR_DISCORD_ID))) {
+      if (m.channelId !== "1175738843203391550") return; // та-самая-пати
+      if (m.author.id !== "1122199797449904179" /* TheVoid */) {
         return;
       }
 
@@ -66,12 +67,9 @@ const sendMsgLogs = (
   const fields = [
     {
       name: `${m2 ? "Старое с" : "С"}одержание`,
-      value: `\`\`\`${m.content ? m.content
-        .replaceAll("```", "<kr_code>")
-        .replaceAll("``", "<kr_qq>")
-        .replaceAll("`", "<kr_q>")
-        :
-        "<Пусто>"
+      value: `\`\`\`${m.content
+        ? krCodeTranslator("StringToKrCode", m.content, m.client)
+        : "<Пусто>"
         }\`\`\``,
       inline: false,
     },
@@ -89,12 +87,9 @@ const sendMsgLogs = (
   if (m2) {
     fields.push({
       name: "Новое содержание",
-      value: `\`\`\`${m2.content ? m2.content
-        .replaceAll("```", "<kr_code>")
-        .replaceAll("``", "<kr_qq>")
-        .replaceAll("`", "<kr_q>")
-        :
-        "<Пусто>"
+      value: `\`\`\`${m2.content
+        ? krCodeTranslator("StringToKrCode", m2.content, m.client)
+        : "<Пусто>"
         }\`\`\``,
       inline: false,
     });
@@ -130,41 +125,12 @@ const sendMsgLogs = (
   });
 };
 
-let theVoidChatting = true;
+let theVoidChatting = false;
+const theVoidChattingBlocked = false;
+
 const sendActivityForTheVoid = async (m: Message) => {
-  if (m.author.id == AUTHOR_DISCORD_ID) {
-    if (m.content.toLowerCase() == "стоп") {
-      if (!theVoidChatting) {
-        await (m.channel as TextChannel).send({
-          content: "Переписка уже остановлена",
-          reply: {
-            messageReference: m
-          }
-        });
-
-        return;
-      };
-
-      theVoidChatting = false;
-
-      await (m.channel as TextChannel).send({
-        content: "Блокирую получение сообщений... (10 секунд)",
-        reply: {
-          messageReference: m
-        }
-      }).then(m => m.react("🚫"));
-
-
-      await setTimeout(() => theVoidChatting = true, 10000);
-
-      return;
-    }
-
-    return;
-  }
-
-  if (!theVoidChatting) return;
-  theVoidChatting = false;
+  if (theVoidChatting || theVoidChattingBlocked) return;
+  theVoidChatting = true;
 
   m.channel.sendTyping();
 
@@ -196,7 +162,7 @@ const sendActivityForTheVoid = async (m: Message) => {
         messageReference: m
       }
     });
-    theVoidChatting = true;
+    theVoidChatting = false;
   },
     2000
   )

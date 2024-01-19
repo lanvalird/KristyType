@@ -29,8 +29,9 @@ export const BOT_LOG_PREFIX = process.env.BOT_LOG_PREFIX || "<kr_err:notvar>";
 
 printLog("запускаю...");
 
-// ПРИСВАЕМ БОТУ ПРАВА
+// СОЗДАЁМ КЛИЕНТ
 const client = new Client({
+  // ПРИСВАЕМ БОТУ ПРАВА
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -40,6 +41,7 @@ const client = new Client({
     GatewayIntentBits.GuildPresences,
   ],
 });
+export default client;
 
 // TRY CATCH ТОЧНО РАБОТАЕТ?
 try {

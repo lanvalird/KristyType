@@ -77,6 +77,10 @@ export default (type: string, str: string, c: Client): string => {
         return text;
     }
     const stringToKrCodeTranslator = (text: string) => {
+        keysToString.forEach(e => {
+            text = text.replaceAll(e.value, `<kr_${e.key}>`);
+        })
+
         return text;
     }
 
