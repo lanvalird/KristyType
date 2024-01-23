@@ -3,11 +3,11 @@ dotenv.config()
 
 import { Client, GatewayIntentBits } from "discord.js";
 import { printLog, printLogColorType } from "./utils/console";
-import ready from "./listeners/ready";
-import messagesListener from "./listeners/messagesListener";
-import slashListener from "./listeners/slashListener";
+import ready from "./listeners/clientReadyListener";
+import messagesListener from "./listeners/messageEventsListener";
+import slashListener from "./listeners/interactionCreateListeners/slashListener";
 import voiceChannelsListener from "./listeners/voiceChannelsListener";
-import modalListener from "./listeners/modalListener";
+import modalListener from "./listeners/interactionCreateListeners/modalListener";
 import presencesListener from './listeners/presencesListener';
 
 

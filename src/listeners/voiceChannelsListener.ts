@@ -45,7 +45,7 @@ const connectionHelper = (vs: VoiceState, off?: boolean) => {
       },
     });
 
-    const musicsPath = path.join(__dirname, '../lMusic');
+    const musicsPath = path.join(__dirname, '../assets/music');
     const formatsFile: string[] = [".mpeg", ".mp3", ".mp4", ".opus", ".acc"]
     const musicsFiles: string[] = [];
     for (let i = 0; i < formatsFile.length; i++) {

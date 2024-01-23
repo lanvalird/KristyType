@@ -19,8 +19,10 @@
     "sourceMap": false,
     "baseUrl": "./",
     "paths": {
-      "@src": ["src"],
-      "@src/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@commands/*": ["src/commands/*"],
+      "@interfaces/*": ["src/interfaces/*"]
     }
   },
   "files": ["src/Bot.ts"],

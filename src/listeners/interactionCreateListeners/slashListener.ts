@@ -3,7 +3,7 @@ import {
   Client,
   Interaction,
 } from "discord.js";
-import { Commands, GuildCommands } from "../Commands";
+import { Commands, GuildCommands } from "../../Commands";
 
 export default (client: Client): void => {
   client.on("interactionCreate", async (interaction: Interaction) => {
