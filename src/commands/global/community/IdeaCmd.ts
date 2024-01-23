@@ -9,9 +9,9 @@ import {
   ActionRowBuilder,
   TextInputBuilder,
 } from "discord.js";
-import { Command } from "../../Command";
+import { ICommand } from "@interfaces/ICommand";
 
-export const IdeaCmd: Command = {
+const command: ICommand = {
   name: "idea",
   description: "Suggest your idea.",
   nameLocalizations: {
@@ -62,4 +62,5 @@ export const IdeaCmd: Command = {
 
     await interaction.showModal(modal)
   },
-};
+}
+export default command;

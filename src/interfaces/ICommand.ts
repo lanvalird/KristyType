@@ -4,6 +4,10 @@ import {
   Client,
 } from "discord.js";
 
-export interface Command extends ChatInputApplicationCommandData {
+export interface ICommand extends ChatInputApplicationCommandData {
   run: (client: Client, interaction: CommandInteraction) => void;
+}
+
+export interface IFileCommand {
+  default: ICommand
 }

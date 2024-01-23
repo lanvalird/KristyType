@@ -10,9 +10,9 @@ import {
   ApplicationCommandOptionType,
   GuildMember,
 } from "discord.js";
-import { Command } from "../../Command";
+import { ICommand } from "@interfaces/ICommand";
 
-export const UserCmd: Command = {
+const command: ICommand = {
   name: "user",
   description: "Returns info about user.",
   nameLocalizations: {
@@ -153,4 +153,5 @@ export const UserCmd: Command = {
       });
     }
   },
-};
+}
+export default command;

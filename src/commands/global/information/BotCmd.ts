@@ -4,10 +4,10 @@ import {
     ApplicationCommandType,
     EmbedBuilder,
 } from "discord.js";
-import { Command } from "../../Command";
-import { AUTHOR, BOT_VERSION, BOT_VERSION_STATUS } from "../../Bot";
+import { ICommand } from "@interfaces/ICommand";
+import { AUTHOR, BOT_VERSION, BOT_VERSION_STATUS } from "../../../Bot";
 
-export const BotCmd: Command = {
+const command: ICommand = {
     name: "bot",
     description: "Returns info about bot.",
     nameLocalizations: {
@@ -71,4 +71,5 @@ export const BotCmd: Command = {
             embeds: [content],
         });
     },
-};
+}
+export default command;

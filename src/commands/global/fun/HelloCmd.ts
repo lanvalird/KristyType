@@ -1,7 +1,7 @@
 import { CommandInteraction, Client, ApplicationCommandType } from "discord.js";
-import { Command } from "../../Command";
+import { ICommand } from "@interfaces/ICommand";
 
-export const HelloCmd: Command = {
+const command: ICommand = {
   name: "greeting",
   description: "Returns a greeting",
   nameLocalizations: {
@@ -19,4 +19,5 @@ export const HelloCmd: Command = {
       content,
     });
   },
-};
+}
+export default command;

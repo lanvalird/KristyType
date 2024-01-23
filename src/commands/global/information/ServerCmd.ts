@@ -4,9 +4,9 @@ import {
   ApplicationCommandType,
   EmbedBuilder,
 } from "discord.js";
-import { Command } from "../../Command";
+import { ICommand } from "@interfaces/ICommand";
 
-export const ServerCmd: Command = {
+const command: ICommand = {
   name: "server",
   description: "Returns info about server.",
   nameLocalizations: {
@@ -51,4 +51,5 @@ export const ServerCmd: Command = {
       embeds: [content],
     });
   },
-};
+}
+export default command;

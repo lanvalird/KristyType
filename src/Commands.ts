@@ -1,22 +1,25 @@
-import { Command } from "./Command";
-import { BotCmd } from "./commands/global/BotCmd";
-import { HelloCmd } from "./commands/global/HelloCmd";
-import { KillCmd } from "./commands/guild/KillCmd";
-import { MailToServerCmd } from "./commands/global/MailToServerCmd";
-import { ServerCmd } from "./commands/global/ServerCmd";
-import { IdeaCmd } from "./commands/global/IdeaCmd";
-import { UserCmd } from "./commands/global/UserCmd";
+import { ICommand, IFileCommand } from "@interfaces/ICommand";
+import KillCmd from "./commands/guild/KillCmd";
+import fs from "node:fs";
+import path from "node:path";
 
-export const Commands: Command[] = [
-    HelloCmd,
-    ServerCmd,
-    UserCmd,
-    IdeaCmd,
-    MailToServerCmd,
-    BotCmd,
+export const Commands: ICommand[] = [];
+const foldersPath = path.join(__dirname, 'commands/global');
+const commandFolders = fs.readdirSync(foldersPath);
 
-];
 
-export const GuildCommands: Command[] = [
-    KillCmd,
+for (const folder of commandFolders) {
+    const commandsPath = path.join(foldersPath, folder);
+    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
+    for (const file of commandFiles) {
+        const filePath = path.join(commandsPath, file);
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const command: IFileCommand = require(filePath);
+        Commands.push(command.default)
+    }
+}
+
+// специально оставил, чтобы вручную вносить нужные мне команды
+export const GuildCommands: ICommand[] = [
+    KillCmd(),
 ];
