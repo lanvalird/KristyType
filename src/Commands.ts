@@ -21,5 +21,4 @@ for (const folder of commandFolders) {
 
 // специально оставил, чтобы вручную вносить нужные мне команды
 export const GuildCommands: ICommand[] = [
-    KillCmd(),
-];
+    KillCmd()]
