@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int     @id
+  name        String?
+  ideas       Idea[]
+  guilds      Guild[]
+  isBlacklist Boolean @default(false) @map("is_blacklist")
+  isWhitelist Boolean @default(false) @map("is_whitelist")
+}
+
+model Guild {
+  id          Int            @id
+  owner       User           @relation(fields: [ownerId], references: [id])
+  ownerId     Int            @map("owner_id")
+  name        String
+  description String?
+  settings    GuildSettings?
+}
+
+model GuildSettings {
+  id                   Int                       @id
+  kristyStudioSettings KristyStudioGuildSettings @relation(fields: [kristyStudioGuildSettingsId], references: [id])
+
+  Guild                       Guild @relation(fields: [id], references: [id])
+  kristyStudioGuildSettingsId Int
+}
+
+model KristyStudioGuildSettings {
+  id            Int             @id
+  name          String          @default("")
+  title         String?
+  description   String?
+  logEnabled    Boolean         @default(false) @map("log_enabled")
+  logChannelId  String?         @map("log_channel_id")
+  GuildSettings GuildSettings[]
+}
+
+model Idea {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String
+  author      User       @relation(fields: [authorId], references: [id])
+  authorId    Int
+  status      IdeaStatus @default(none)
+  likes       Int        @default(0)
+  dislikes    Int        @default(0)
+}
+
+enum IdeaStatus {
+  none // Нет статуса
+  accepted // Принятая
+  realized // Реализована
+  rejected // Отклонена
+
+  @@map("Status")
+}

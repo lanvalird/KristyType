@@ -1,13 +1,11 @@
 import {
   CommandInteraction,
   ChatInputApplicationCommandData,
-  Client,
 } from "discord.js";
+import { KristyCommandConfig } from "../types/KristyCommandConfigType";
 
-export interface ICommand extends ChatInputApplicationCommandData {
-  run: (client: Client, interaction: CommandInteraction) => void;
-}
-
-export interface IFileCommand {
-  default: ICommand
+export interface ICommand {
+  action: (interaction: CommandInteraction) => void;
+  discord: ChatInputApplicationCommandData;
+  kristy?: KristyCommandConfig;
 }

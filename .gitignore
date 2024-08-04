@@ -1,7 +1,18 @@
 # My files
 start.bat
-src/assets/music/*
-src/db/*_activities.json
+prisma/migrations/**
+
+# Generated files
+src/generated
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+!prisma/migrations/migration_lock.toml
 
 # Logs
 logs
@@ -76,13 +87,6 @@ web_modules/
 
 # Yarn Integrity file
 .yarn-integrity
-
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache

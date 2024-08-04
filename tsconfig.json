@@ -20,12 +20,17 @@
     "baseUrl": "./",
     "paths": {
       "@src/*": ["src/*"],
-      "@assets/*": ["src/assets/*"],
+      "@listeners/*": ["src/listeners/*"],
       "@commands/*": ["src/commands/*"],
-      "@interfaces/*": ["src/interfaces/*"]
+      "@assets/*": ["src/assets/*"],
+      "@types/*": ["src/types/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
-  "files": ["src/Bot.ts"],
   "include": ["./**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
 }

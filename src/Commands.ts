@@ -1,24 +1,25 @@
-import { ICommand, IFileCommand } from "@interfaces/ICommand";
-import KillCmd from "./commands/guild/KillCmd";
-import fs from "node:fs";
-import path from "node:path";
+import fs from "fs";
+import path from "path";
+import { ICommand } from "./interfaces/ICommand";
 
-export const Commands: ICommand[] = [];
-const foldersPath = path.join(__dirname, 'commands/global');
-const commandFolders = fs.readdirSync(foldersPath);
+const commands: Array<ICommand> = [];
 
+const dir = path.join(__dirname, "commands");
+function addFiles(dir: string) {
+  fs.readdirSync(dir)
+    .filter((file) => file.endsWith(".ts"))
+    .forEach((file) => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const command = require(path.join(dir, file)).default;
 
-for (const folder of commandFolders) {
-    const commandsPath = path.join(foldersPath, folder);
-    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
-    for (const file of commandFiles) {
-        const filePath = path.join(commandsPath, file);
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const command: IFileCommand = require(filePath);
-        Commands.push(command.default)
-    }
+      commands.push(command);
+    });
+
+  fs.readdirSync(dir)
+    .filter((folder) => fs.lstatSync(path.join(dir, folder)).isDirectory())
+    .forEach((folder) => addFiles(path.join(dir, folder)));
 }
 
-// специально оставил, чтобы вручную вносить нужные мне команды
-export const GuildCommands: ICommand[] = [
-    KillCmd()]
+addFiles(dir);
+
+export default commands;

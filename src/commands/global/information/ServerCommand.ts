@@ -1,22 +1,29 @@
 import {
   CommandInteraction,
-  Client,
   ApplicationCommandType,
   EmbedBuilder,
+  ChatInputApplicationCommandData,
 } from "discord.js";
 import { ICommand } from "@interfaces/ICommand";
+import { KristyCommandConfig } from "@src/types/KristyCommandConfigType";
+import Bot from "@src/Bot";
 
-const command: ICommand = {
-  name: "server",
-  description: "Returns info about server.",
-  nameLocalizations: {
-    "ru": "сервер",
-  },
-  descriptionLocalizations: {
-    "ru": "Возвращает инфу о сервере.",
-  },
-  type: ApplicationCommandType.ChatInput,
-  run: async (client: Client, interaction: CommandInteraction) => {
+export default class BotCommand implements ICommand {
+  public readonly discord: ChatInputApplicationCommandData = {
+    name: "server",
+    description: "Returns info about server.",
+    type: ApplicationCommandType.ChatInput,
+  };
+  public readonly kristy: KristyCommandConfig = {
+    commandType: "global",
+  };
+  private bot: Bot;
+
+  constructor(bot: Bot) {
+    this.bot = bot;
+  }
+
+  public async action(interaction: CommandInteraction) {
     const content = new EmbedBuilder()
       .setColor("#7f7f7f")
       .setAuthor({
@@ -50,6 +57,5 @@ const command: ICommand = {
       ephemeral: true,
       embeds: [content],
     });
-  },
+  }
 }
-export default command;
