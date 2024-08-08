@@ -11,7 +11,7 @@ import { KristyCommandConfig } from "@src/types/KristyCommandConfigType";
 import Bot from "@src/Bot";
 import { PrinterColors } from "@src/libs/Printer";
 
-export default class BotCommand implements ICommand {
+export default class KillCommand implements ICommand {
   public readonly discord: ChatInputApplicationCommandData = {
     name: "sleep",
     description: "Good night…",

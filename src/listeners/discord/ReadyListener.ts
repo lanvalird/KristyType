@@ -23,7 +23,11 @@ export default class ReadyListener
 
     bot.client.application.commands.set(
       bot.commands
-        .filter((c) => c.kristy?.commandType === "global")
+        .filter(
+          (c) =>
+            c.kristy?.commandType === "global" ||
+            c.kristy?.commandType === undefined,
+        )
         .map((c) => c.discord),
     );
     if (process.env.BOT_GUILD_ID)

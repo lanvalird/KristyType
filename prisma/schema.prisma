@@ -15,7 +15,7 @@ datasource db {
 }
 
 model User {
-  id          Int     @id
+  id          String  @id
   name        String?
   ideas       Idea[]
   guilds      Guild[]
@@ -24,24 +24,24 @@ model User {
 }
 
 model Guild {
-  id          Int            @id
+  id          String         @id
   owner       User           @relation(fields: [ownerId], references: [id])
-  ownerId     Int            @map("owner_id")
+  ownerId     String         @map("owner_id")
   name        String
   description String?
   settings    GuildSettings?
 }
 
 model GuildSettings {
-  id                   Int                       @id
+  id                   String                    @id
   kristyStudioSettings KristyStudioGuildSettings @relation(fields: [kristyStudioGuildSettingsId], references: [id])
 
-  Guild                       Guild @relation(fields: [id], references: [id])
-  kristyStudioGuildSettingsId Int
+  Guild                       Guild  @relation(fields: [id], references: [id])
+  kristyStudioGuildSettingsId String
 }
 
 model KristyStudioGuildSettings {
-  id            Int             @id
+  id            String          @id
   name          String          @default("")
   title         String?
   description   String?
@@ -55,7 +55,7 @@ model Idea {
   title       String
   description String
   author      User       @relation(fields: [authorId], references: [id])
-  authorId    Int
+  authorId    String
   status      IdeaStatus @default(none)
   likes       Int        @default(0)
   dislikes    Int        @default(0)

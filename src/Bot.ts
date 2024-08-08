@@ -1,10 +1,12 @@
 import { Client, GatewayIntentBits } from "discord.js";
-import { Printer } from "./libs/Printer";
+import { Printer, PrinterColors } from "./libs/Printer";
 import { ICommand } from "./interfaces/ICommand";
+import { PrismaClient } from "./generated/prisma/client";
 
 export default class Bot {
   public client: Client;
   public printer: Printer;
+  public prisma: PrismaClient;
   public commands: ICommand[] = [];
 
   public destroy() {
@@ -17,16 +19,30 @@ export default class Bot {
     listeners: any[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     commands: any[],
+    prisma: PrismaClient,
     config?: { name: string },
   ) {
     this.printer = new Printer(config?.name && config.name);
 
     this.printer.print("инициализация экземпляра…");
 
+    this.prisma = prisma;
+
     for (let i = 0; i < commands.length; i++) {
       const c = commands[i];
-
-      this.commands.push(new c(this));
+      try {
+        this.commands.push(new c(this));
+      } catch (err) {
+        this.printer.error(`${commands[i]} (${i}) – ${err}`);
+        this.printer.print(
+          "Весь список загруженных команд:\n" +
+            this.commands
+              .flatMap((c, ni) => 
+                `    ${ni + 1}. ${c.discord.name} – ${c.discord.description}`
+              )
+              .join("\n"), PrinterColors.success
+        );
+      }
     }
 
     this.client = new Client({
@@ -41,8 +57,8 @@ export default class Bot {
       ],
     });
 
-    // РЕГИСТРАЦИЯ СЛУШАТЕЛЕЙ
-    this.printer.print("регистрация слушателей…");
+    // РЕГИСТРАЦИЯ ПРОСЛУШАТЕЛЕЙ
+    this.printer.print("регистрация прослушателей…");
     listeners.forEach((listener) => {
       const l = new listener(this).object;
       this.client.on(l.event, l.action);

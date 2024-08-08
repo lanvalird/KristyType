@@ -8,11 +8,12 @@ import { ICommand } from "@interfaces/ICommand";
 import { KristyCommandConfig } from "@src/types/KristyCommandConfigType";
 import Bot from "@src/Bot";
 
-export default class BotCommand implements ICommand {
+export default class ServerCommand implements ICommand {
   public readonly discord: ChatInputApplicationCommandData = {
     name: "server",
     description: "Returns info about server.",
     type: ApplicationCommandType.ChatInput,
+    dmPermission: false,
   };
   public readonly kristy: KristyCommandConfig = {
     commandType: "global",

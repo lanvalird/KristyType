@@ -11,7 +11,7 @@ import { ICommand } from "@interfaces/ICommand";
 import { KristyCommandConfig } from "@src/types/KristyCommandConfigType";
 import Bot from "@src/Bot";
 
-export default class BotCommand implements ICommand {
+export default class UserCommand implements ICommand {
   public readonly discord: ChatInputApplicationCommandData = {
     name: "user",
     description: "Returns info about user.",
