@@ -1,9 +1,10 @@
 {
   "name": "kristytype",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Simple Discord Bot",
   "scripts": {
     "kristy/start": "ts-node src/index.ts",
+    "kristy/migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts",
     "prisma/migrate:dev": "npx prisma migrate dev --name init",
     "prisma/generate": "npx prisma generate",
     "prisma/studio": "npx prisma studio"
@@ -11,7 +12,6 @@
   "author": "aculaOne",
   "license": "MIT",
   "dependencies": {
-    "@prisma/client": "5.17.0",
     "canvas": "^2.11.2",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
@@ -24,7 +24,6 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
-    "prisma": "^5.17.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5"

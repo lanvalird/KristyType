@@ -1,12 +1,9 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import { Printer, PrinterColors } from "./libs/Printer";
 import { ICommand } from "./interfaces/ICommand";
-import { PrismaClient } from "./generated/prisma/client";
-
 export default class Bot {
   public client: Client;
   public printer: Printer;
-  public prisma: PrismaClient;
   public commands: ICommand[] = [];
 
   public destroy() {
@@ -19,14 +16,11 @@ export default class Bot {
     listeners: any[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     commands: any[],
-    prisma: PrismaClient,
     config?: { name: string },
   ) {
     this.printer = new Printer(config?.name && config.name);
 
     this.printer.print("инициализация экземпляра…");
-
-    this.prisma = prisma;
 
     for (let i = 0; i < commands.length; i++) {
       const c = commands[i];
@@ -37,10 +31,12 @@ export default class Bot {
         this.printer.print(
           "Весь список загруженных команд:\n" +
             this.commands
-              .flatMap((c, ni) => 
-                `    ${ni + 1}. ${c.discord.name} – ${c.discord.description}`
+              .flatMap(
+                (c, ni) =>
+                  `    ${ni + 1}. ${c.discord.name} – ${c.discord.description}`,
               )
-              .join("\n"), PrinterColors.success
+              .join("\n"),
+          PrinterColors.success,
         );
       }
     }
