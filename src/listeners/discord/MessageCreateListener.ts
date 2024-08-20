@@ -22,8 +22,15 @@ export default class MessageCreateListener
         PermissionsBitField.Flags.SendMessagesInThreads,
       ])
     ) {
+      // Для локальной шутки
+      if (
+        new RegExp(/\/скинь([-_]*)ножки/gm).test(message.content.toLowerCase())
+      )
+        message.reply("Извращенец!");
+
+      // Просто чтобы было
       if (message.mentions.has(this.bot.client.user?.id)) {
-        setTimeout(() => message.reply(`Я тебя не понимаю.`), 1000);
+        setTimeout(() => message.reply("Я тебя не понимаю."), 1000);
 
         message.channel?.sendTyping();
       }

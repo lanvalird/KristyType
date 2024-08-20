@@ -103,7 +103,7 @@ export class Printer {
     for (let i = 0; i < strokes.length; i++) {
       let str = strokes[i];
 
-      while (str.length < 50) {
+      while (str.length < 100) {
         if (!strokes[i + 1] || strokes[i + 1].startsWith("\n")) break;
         if (str.startsWith("\n")) str = str.slice(1);
 
