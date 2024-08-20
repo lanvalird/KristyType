@@ -11,5 +11,7 @@ new ErrorListener();
 
 welcomer();
 
-const bot = new Bot(process.env.BOT_TOKEN, listeners, commands);
-export default bot;
+new Bot(process.env.BOT_TOKEN, listeners, commands, {
+  name: "Kristy",
+  path: "./src/config.json",
+});

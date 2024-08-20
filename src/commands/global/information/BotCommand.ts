@@ -40,33 +40,38 @@ export default class BotCommand implements ICommand {
       .addFields([
         {
           name: "Тип версии",
-          value: "```KristyType```",
+          value: "``` KristyType ```",
           inline: true,
         },
         {
           name: "Версия",
-          value: "```2.0.0-EXPIREMENTAL```",
-          inline: true,
-        },
-        {
-          name: "Автор",
-          value: `\`\`\`aculaOne\`\`\``,
-          inline: true,
-        },
-        {
-          name: "Языки",
-          value: "```WIP```",
+          value:
+            "``` " +
+            this.bot.config?.bot.version +
+            "-" +
+            this.bot.config?.bot.status +
+            " ```",
           inline: true,
         },
         {
           name: "Последнее обновление",
-          value: "```Code Refactor```",
+          value: "``` Code Refactor ```",
+          inline: false,
+        },
+        {
+          name: "Автор",
+          value: "``` " + this.bot.config?.author.name + " ```",
           inline: true,
         },
         {
           name: "Благодарность",
-          value: "```@fockusty```",
+          value: "``` @fockusty ```",
           inline: true,
+        },
+        {
+          name: "Языки",
+          value: "``` WIP ```",
+          inline: false,
         },
       ])
       .setImage(

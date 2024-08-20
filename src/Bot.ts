@@ -1,11 +1,16 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import { Printer, PrinterColors } from "./libs/Printer";
 import { ICommand } from "./interfaces/ICommand";
+import { Config } from "./libs/Config";
 export default class Bot {
   public client: Client;
   public printer: Printer;
   public commands: ICommand[] = [];
+  private _config: Config | undefined;
 
+  get config() {
+    return this._config?.getConfig();
+  }
   public destroy() {
     this.client.destroy();
   }
@@ -16,9 +21,12 @@ export default class Bot {
     listeners: any[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     commands: any[],
-    config?: { name: string },
+    config?: { name: string; path: string },
   ) {
     this.printer = new Printer(config?.name && config.name);
+
+    this.printer.print("загрузка конфигурации…");
+    this._config = new Config(config?.path || "./src/config.json");
 
     this.printer.print("инициализация экземпляра…");
 
