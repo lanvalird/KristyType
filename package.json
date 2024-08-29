@@ -1,32 +1,32 @@
 {
   "name": "kristytype",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Simple Discord Bot",
   "scripts": {
-    "kristy/start": "ts-node src/index.ts",
-    "kristy/migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts",
-    "prisma/migrate:dev": "npx prisma migrate dev --name init",
-    "prisma/generate": "npx prisma generate",
-    "prisma/studio": "npx prisma studio"
+    "kristy:start": "ts-node src/index.ts",
+    "kristy::migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts",
+    "prisma::migrate:dev": "npx prisma migrate dev --name init",
+    "prisma:generate": "npx prisma generate",
+    "prisma:studio": "npx prisma studio"
   },
   "author": "aculaOne",
   "license": "MIT",
   "dependencies": {
     "canvas": "^2.11.2",
-    "discord.js": "^14.14.1",
-    "dotenv": "^16.4.5",
-    "postgresql": "^0.0.1"
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
-    "@types/node": "^20.12.7",
-    "@typescript-eslint/eslint-plugin": "^7.7.0",
-    "@typescript-eslint/parser": "^7.7.0",
+    "@types/node": "^20.16.1",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.4.5"
+    "tslib": "^2.7.0",
+    "typescript": "^5.5.4"
   },
   "main": ".eslintrc.js"
 }

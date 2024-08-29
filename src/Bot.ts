@@ -35,7 +35,6 @@ export default class Bot {
       try {
         this.commands.push(new c(this));
       } catch (err) {
-        this.printer.error(`${commands[i]} (${i}) – ${err}`);
         this.printer.print(
           "Весь список загруженных команд:\n" +
             this.commands
@@ -46,6 +45,7 @@ export default class Bot {
               .join("\n"),
           PrinterColors.success,
         );
+        this.printer.error(`${commands[i]} (${i}) – ${err}`);
       }
     }
 

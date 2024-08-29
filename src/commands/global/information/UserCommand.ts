@@ -36,7 +36,7 @@ export default class UserCommand implements ICommand {
 
   public async action(interaction: CommandInteraction) {
     const member =
-      (interaction.options.getMember("user") as GuildMember) ||
+      (interaction.options.get("user")?.member as GuildMember) ||
       interaction.member;
     if (!member) {
       await interaction.reply({

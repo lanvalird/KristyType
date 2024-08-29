@@ -1,4 +1,10 @@
-// ФАЙЛ ДЛЯ ПЕРЕНОСА СТАРЫХ АКТИВНОСТЕЙ В НОВЫЙ ФОРМАТ АКТИВНОСТЕЙ
+/*
+    ФАЙЛ ДЛЯ ПЕРЕНОСА СТАРЫХ АКТИВНОСТЕЙ В НОВЫЙ ФОРМАТ АКТИВНОСТЕЙ
+    ---------------------------------------------------------------
+
+    Работает на активностях для версий с      1.0.4       по 2.0.0
+                                         (необупликована)
+*/
 
 import fs from "fs";
 import path from "path";
@@ -76,16 +82,15 @@ function migrate(
   });
 
   acts.forEach((act) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { parent, ...exit } = act;
 
-    fs.mkdirSync(path.join(mother, act.parent), { recursive: true });
+    fs.mkdirSync(path.join(mother, parent), { recursive: true });
     fs.writeFileSync(
-      path.join(mother, act.parent, act.name + ".json"),
+      path.join(mother, parent, act.name + ".json"),
       JSON.stringify(exit, undefined, 2),
     );
 
-    pr.print(act.parent + act.name + ".json", PrinterColors.success);
+    pr.print(parent + act.name + ".json", PrinterColors.success);
   });
 }
 
