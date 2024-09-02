@@ -1,18 +1,15 @@
 {
   "name": "kristytype",
-  "version": "2.2.2",
-  "description": "Simple Discord Bot",
+  "version": "2.2.3",
+  "description": "Kristy is a very simple and cute Discord bot",
   "scripts": {
     "kristy:start": "ts-node src/index.ts",
-    "kristy::migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts",
-    "prisma::migrate:dev": "npx prisma migrate dev --name init",
-    "prisma:generate": "npx prisma generate",
-    "prisma:studio": "npx prisma studio"
+    "kristy::migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts"
   },
   "author": "aculaOne",
   "license": "MIT",
   "dependencies": {
-    "canvas": "^2.11.2",
+    "@napi-rs/canvas": "^0.1.55",
     "discord.js": "^14.15.3",
     "dotenv": "^16.4.5"
   },

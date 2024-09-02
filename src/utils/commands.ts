@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
-import { ICommand } from "./interfaces/ICommand";
+import { ICommand } from "../interfaces/ICommand";
 
 const commands: Array<ICommand> = [];
 
-const dir = path.join(__dirname, "commands");
+const dir = path.join(__dirname, "../", "commands");
 function addFiles(dir: string) {
   fs.readdirSync(dir)
     .filter((file) => file.endsWith(".ts"))

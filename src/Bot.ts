@@ -62,7 +62,7 @@ export default class Bot {
     });
 
     // РЕГИСТРАЦИЯ ПРОСЛУШАТЕЛЕЙ
-    this.printer.print("регистрация прослушателей…");
+    this.printer.print("регистрация слушателей…");
     listeners.forEach((listener) => {
       const l = new listener(this).object;
       this.client.on(l.event, l.action);

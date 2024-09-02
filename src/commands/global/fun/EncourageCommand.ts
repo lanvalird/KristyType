@@ -8,7 +8,7 @@ import { ICommand } from "@interfaces/ICommand";
 import { KristyCommandConfig } from "@src/types/KristyCommandConfigType";
 import Bot from "@src/Bot";
 import { randomIntFromInterval } from "@src/utils/randomIntFromInterval";
-import { createCanvas } from "canvas";
+import { createCanvas } from "@napi-rs/canvas";
 
 const words: string[] = [
   "Солнышко",
@@ -81,17 +81,19 @@ export default class EncourageCommand implements ICommand {
       canvas.height / 2 + text.actualBoundingBoxAscent / 2,
     );
 
-    return canvas.toBuffer();
+    return canvas.encode("png");
   }
 
   public async action(interaction: CommandInteraction) {
     const result = words[randomIntFromInterval(0, words.length - 1)];
 
-    const bf = this.drawRes(result);
+    const attachment = new AttachmentBuilder(await this.drawRes(result), {
+      name: "image.png",
+    });
 
     await interaction.reply({
       ephemeral: true,
-      files: [new AttachmentBuilder(bf, { name: "image.png" })],
+      files: [attachment],
     });
   }
 }

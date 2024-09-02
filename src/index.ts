@@ -3,7 +3,7 @@ dotenv.config();
 
 import listeners from "./listeners";
 import Bot from "./Bot";
-import commands from "./Commands";
+import commands from "./utils/commands";
 import { ErrorListener } from "./listeners/code/ErrorListener";
 import welcomer from "./utils/welcomer";
 

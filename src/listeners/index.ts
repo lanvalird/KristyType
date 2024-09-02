@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
-import { DiscordListener } from "./DiscordListener";
+import DiscordEventListener from "./DiscordEventListener";
 
-const listeners: Array<DiscordListener> = [];
+const listeners: Array<DiscordEventListener> = [];
 
 const dir = path.join(__dirname, "discord");
 fs.readdirSync(dir)

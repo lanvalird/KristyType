@@ -1,11 +1,11 @@
-import { DiscordListener } from "@listeners/DiscordListener";
+import DiscordEventListener from "@listeners/DiscordEventListener";
 import { ActivityType, Events } from "discord.js";
 import Bot from "@src/Bot";
 import { IListener } from "@interfaces/IListener";
 import { PrinterColors } from "@src/libs/Printer";
 
 export default class ReadyListener
-  extends DiscordListener
+  extends DiscordEventListener
   implements IListener
 {
   protected bot: Bot;

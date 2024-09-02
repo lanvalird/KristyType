@@ -2,8 +2,6 @@
 start.bat
 prisma/migrations/**
 src/assets/activities/files/**
-!src/assets/activities/files/default
-!src/assets/activities/files/default/*
 
 # Generated files
 src/generated
