@@ -4,8 +4,8 @@ import {
   EmbedBuilder,
   ChatInputApplicationCommandData,
 } from "discord.js";
-import { ICommand } from "@interfaces/ICommand";
-import { KristyCommandConfig } from "@src/types/KristyCommandConfigType";
+import { ICommand } from "@src/interfaces/ICommand";
+import { KristyCommandConfig } from "@src/interfaces/IKristyCommandConfig";
 import Bot from "@src/Bot";
 
 export default class ServerCommand implements ICommand {

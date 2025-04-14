@@ -1,7 +1,8 @@
 {
   "name": "kristytype",
-  "version": "2.2.3",
+  "version": "2.2.5",
   "description": "Kristy is a very simple and cute Discord bot",
+
   "scripts": {
     "kristy:start": "ts-node src/index.ts",
     "kristy::migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts"
@@ -10,20 +11,20 @@
   "license": "MIT",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.55",
-    "discord.js": "^14.15.3",
-    "dotenv": "^16.4.5"
+    "discord.js": "^14.15.3"
   },
   "devDependencies": {
     "@types/node": "^20.16.1",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
+    "dotenv": "^16.5.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tslib": "^2.7.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.8.3"
   },
-  "main": ".eslintrc.js"
+  "packageManager": "pnpm@10.7.0"
 }

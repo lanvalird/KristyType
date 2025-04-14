@@ -1,6 +1,6 @@
 import Bot from "@src/Bot";
 import { ICommand } from "@src/interfaces/ICommand";
-import { KristyCommandConfig } from "@src/types/KristyCommandConfigType";
+import { KristyCommandConfig } from "@src/interfaces/IKristyCommandConfig";
 import {
   CommandInteraction,
   ChatInputApplicationCommandData,

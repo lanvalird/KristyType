@@ -2,10 +2,10 @@ import { IConfigFile } from "@src/interfaces/IConfigFile";
 import { readFile } from "fs";
 
 export class Config {
-  private config: IConfigFile | undefined;
+  private _config: IConfigFile | undefined;
 
   getConfig() {
-    return this.config;
+    return this._config;
   }
 
   constructor(path: string) {
@@ -16,7 +16,7 @@ export class Config {
         );
 
       const data = JSON.parse(file.toString());
-      if (data !== undefined) this.config = data;
+      if (data !== undefined) this._config = data;
       else throw new Error("Файл конфигурации пуст");
 
       return;
