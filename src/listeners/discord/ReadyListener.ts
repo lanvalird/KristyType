@@ -3,6 +3,8 @@ import { ActivityType, Events } from "discord.js";
 import Bot from "@src/Bot";
 import { IListener } from "@interfaces/IListener";
 import { PrinterColors } from "@src/libs/Printer";
+import { ActivityManager } from "@src/libs/ActivityManager";
+import { dirname, join } from "node:path";
 
 export default class ReadyListener
   extends DiscordEventListener
@@ -54,6 +56,25 @@ export default class ReadyListener
       `сменил(-а) статус (${bot.client.user.presence.status}), сбросил(-а) список команд и поставил(-а) базовую активность: "${bot.client.user.presence.activities.map((act) => act.state)}".`,
       PrinterColors.success,
     );
+
+    const activityManager = new ActivityManager([]);
+    activityManager.registerActivityList(
+      dirname(
+        join("src", "assets", "activities", "files", "default", "default.json"),
+      ),
+    );
+
+    // ОНО ОТКЛЮЧЕНО, ПОКА НЕ ПЕРЕПИШУ СИСТЕМУ ПОДКЛЮЧЕНИЯ СЛУШАТЕЛЕЙ
+
+    //   setInterval(() => {
+    //     bot.client.user?.setActivity(activityManager.getRandomActivity(), {
+    //       type: ActivityType.Custom,
+    //     });
+    //     bot.printer.print(
+    //       `сменил(-а) статус (${bot.client.user?.presence.status}), сбросил(-а) список команд и поставил(-а) активность: "${bot.client.user?.presence.activities.map((act) => act.state)}".`,
+    //       PrinterColors.success,
+    //     );
+    //   }, 15_000);
   };
 
   constructor(bot: Bot) {

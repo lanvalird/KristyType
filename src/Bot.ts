@@ -8,7 +8,7 @@ export default class Bot {
 
   public printer: Printer;
   public client: Client;
-  commands: ICommand[] = [];
+  public commands: ICommand[] = [];
 
   constructor({
     token,
@@ -21,7 +21,6 @@ export default class Bot {
     commands: any[];
     config?: { name: string; path: string };
   }) {
-    const _commands: ICommand[] = [];
     this.printer = new Printer(config && config.name);
 
     this.printer.print("загрузка конфигурации…");
@@ -87,6 +86,7 @@ export default class Bot {
   }
 
   public destroy() {
+    this.client.removeAllListeners();
     this.client.destroy();
   }
 }
