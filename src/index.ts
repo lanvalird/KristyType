@@ -21,12 +21,11 @@ const bot = new Bot({
   },
 });
 
-const listeners: DiscordEventListener[] = []
+const listeners: DiscordEventListener[] = [];
 for (let i = 0; i < rawListeners.length; i++) {
- listeners.push(new rawListeners[i](bot))
+  listeners.push(new rawListeners[i](bot));
 }
 
 for (let i = 0; i < listeners.length; i++) {
   bot.registerListener(listeners[i]);
 }
-

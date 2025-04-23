@@ -4,6 +4,7 @@ import { Config } from "./libs/Config";
 import { ICommand } from "./interfaces/ICommand";
 import DiscordBaseEventListener from "./listeners/DiscordEventListener";
 import { listeners } from "node:process";
+import DiscordEventListener from "./listeners/DiscordEventListener";
 
 export default class Bot {
   private _config: Config;
@@ -79,13 +80,13 @@ export default class Bot {
   }
 
   public registerListener(listener: DiscordBaseEventListener) {
-    this._listeners.push(listener);
     this.printer.print(
       `регистрирую слушатель событий ${listener.object.event} (#${
-        this._listeners.length
+        this._listeners.length + 1
       })…`,
     );
     this.client.on(listener.object.event, listener.object.action);
+    this._listeners.push(listener);
     return this;
   }
 
@@ -96,20 +97,24 @@ export default class Bot {
         l.object.action === listener.object.action,
     );
 
-    if (index) {
+    if (index || index === 0) {
       this.printer.print(
-        `удаляю слушатель событий ${listener.object.event} (#${index})…`,
+        `удаляю слушатель событий ${listener.object.event} (#${index + 1})…`,
       );
       this.client.off(listener.object.event, listener.object.action);
-    } else this.printer.error("неизвестный слушатель");
+      this._listeners[0].destroy();
+      this._listeners.splice(index, 1);
+    } else
+      this.printer.error(`слушатель ${listener.object.event} не был найден`);
 
     return this;
   }
 
   public destroy() {
-    for (let i = 0; i < this._listeners.length; i++) {
-      const listener = this._listeners[i];
-      listener.destroy();
+    const repeat = this._listeners.length;
+    for (let i = repeat; i > 0; i--) {
+      const listener = this._listeners[0];
+      this.removeListener(listener);
     }
     this._listeners = [];
     this.client.removeAllListeners();

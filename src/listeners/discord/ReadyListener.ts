@@ -72,7 +72,7 @@ export default class ReadyListener
         type: ActivityType.Custom,
       });
       bot.printer.print(
-        `сменил(-а) статус (${bot.client.user?.presence.status}), сбросил(-а) список команд и поставил(-а) активность: "${bot.client.user?.presence.activities.map((act) => act.state)}".`,
+        `сменил(-а) активность: "${bot.client.user?.presence.activities.map((act) => act.state)}".`,
         PrinterColors.success,
       );
     }, 15_000);

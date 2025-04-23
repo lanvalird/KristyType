@@ -1,8 +1,7 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "tabWidth": 2,
   "printWidth": 80,
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  "jsxSingleQuote": true,
+  "endOfLine": "lf",
+  "semi": true
 }

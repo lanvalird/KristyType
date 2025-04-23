@@ -1,11 +1,11 @@
 {
   "name": "kristytype",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Kristy is a very simple and cute Discord bot",
-
   "scripts": {
     "kristy:start": "ts-node src/index.ts",
-    "kristy::migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts"
+    "kristy::migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts",
+    "code::format": "prettier . -c -w"
   },
   "author": "aculaOne",
   "license": "MIT",

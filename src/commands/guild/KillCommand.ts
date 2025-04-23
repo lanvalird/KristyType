@@ -79,7 +79,7 @@ export default class KillCommand implements ICommand {
       embeds: [content],
     });
 
-    let exitSeconds = 30;
+    let exitSeconds = 10;
     this.bot.printer.print(
       `бот выключится через ${exitSeconds} секунд! (${interaction.options.data.find((el) => el.name === "reason")?.value ?? "Без причины"})`,
       PrinterColors.primary,
