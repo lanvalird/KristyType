@@ -1,4 +1,4 @@
-import DiscordEventListener from "@listeners/DiscordEventListener";
+import DiscordBaseEventListener from "@listeners/DiscordEventListener";
 import { ActivityType, Events } from "discord.js";
 import Bot from "@src/Bot";
 import { IListener } from "@interfaces/IListener";
@@ -7,10 +7,13 @@ import { ActivityManager } from "@src/libs/ActivityManager";
 import { dirname, join } from "node:path";
 
 export default class ReadyListener
-  extends DiscordEventListener
+  extends DiscordBaseEventListener
   implements IListener
 {
+  private intervalId: NodeJS.Timeout | null = null;
+
   protected bot: Bot;
+
   public event = Events.ClientReady;
   public action = async (): Promise<void> => {
     const bot = this.bot;
@@ -64,21 +67,23 @@ export default class ReadyListener
       ),
     );
 
-    // ОНО ОТКЛЮЧЕНО, ПОКА НЕ ПЕРЕПИШУ СИСТЕМУ ПОДКЛЮЧЕНИЯ СЛУШАТЕЛЕЙ
-
-    //   setInterval(() => {
-    //     bot.client.user?.setActivity(activityManager.getRandomActivity(), {
-    //       type: ActivityType.Custom,
-    //     });
-    //     bot.printer.print(
-    //       `сменил(-а) статус (${bot.client.user?.presence.status}), сбросил(-а) список команд и поставил(-а) активность: "${bot.client.user?.presence.activities.map((act) => act.state)}".`,
-    //       PrinterColors.success,
-    //     );
-    //   }, 15_000);
+    this.intervalId = setInterval(() => {
+      bot.client.user?.setActivity(activityManager.getRandomActivity(), {
+        type: ActivityType.Custom,
+      });
+      bot.printer.print(
+        `сменил(-а) статус (${bot.client.user?.presence.status}), сбросил(-а) список команд и поставил(-а) активность: "${bot.client.user?.presence.activities.map((act) => act.state)}".`,
+        PrinterColors.success,
+      );
+    }, 15_000);
   };
 
   constructor(bot: Bot) {
     super(bot);
     this.bot = bot;
+  }
+
+  public async destroy(): Promise<void> {
+    if (this.intervalId) clearInterval(this.intervalId);
   }
 }

@@ -7,6 +7,7 @@ export default abstract class DiscordEventListener implements IListener {
   // action()
   public abstract action(event?: any): Promise<void>;
   public abstract action(...args: any[]): Promise<void>;
+  public async destroy(): Promise<void> {}
 
   public constructor(bot: Bot) {
     this.bot = bot;
@@ -18,6 +19,7 @@ export default abstract class DiscordEventListener implements IListener {
     return {
       event: this.event,
       action: this.action,
+      destroy: this.destroy,
     };
   }
 }

@@ -1,8 +1,9 @@
 import fs from "fs";
 import path from "path";
 import DiscordEventListener from "./DiscordEventListener";
+import Bot from "@src/Bot";
 
-const listeners: Array<DiscordEventListener> = [];
+const listeners: Array< new (bot: Bot) =>  DiscordEventListener> = [];
 
 const dir = path.join(__dirname, "discord");
 fs.readdirSync(dir)
