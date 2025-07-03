@@ -32,7 +32,7 @@ export default class MessageCreateListener
       if (message.mentions.has(this.bot.client.user?.id)) {
         setTimeout(() => message.reply("Я тебя не понимаю."), 1000);
 
-        message.channel?.sendTyping();
+        (message.channel as TextChannel)?.sendTyping();
       }
     }
   };
