@@ -1,25 +1,28 @@
-import fs from "fs";
-import path from "path";
-import { ICommand } from "../interfaces/ICommand";
+import { lstatSync, readdirSync } from "fs";
+import { join } from "path";
 
+import type { ICommand } from "../interfaces/ICommand";
+
+const dir = join(import.meta.dirname, "../", "commands");
+const files = readdirSync(dir).filter((file) => file.endsWith(".ts"));
 const commands: Array<ICommand> = [];
 
-const dir = path.join(__dirname, "../", "commands");
-function addFiles(dir: string) {
-  fs.readdirSync(dir)
-    .filter((file) => file.endsWith(".ts"))
-    .forEach((file) => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const command = require(path.join(dir, file)).default;
+async function addCommands(dir: string) {
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const path = [dir, file];
 
-      commands.push(command);
-    });
+    const command = await import(join(...path));
 
-  fs.readdirSync(dir)
-    .filter((folder) => fs.lstatSync(path.join(dir, folder)).isDirectory())
-    .forEach((folder) => addFiles(path.join(dir, folder)));
+    commands.push(command);
+  }
+
+  console.log(dir);
+  readdirSync(dir)
+    .filter((folder) => lstatSync(join(dir, folder)).isDirectory())
+    .forEach((folder) => addCommands(join(dir, folder)));
 }
 
-addFiles(dir);
+addCommands(dir);
 
 export default commands;
