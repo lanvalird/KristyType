@@ -1,10 +1,10 @@
 import "dotenv/config";
 
-import rawListeners from "./listeners";
 import Bot from "./Bot";
-import commands from "./utils/commands";
 import ErrorListener from "./listeners/code/ErrorListener";
 import DiscordEventListener from "./listeners/DiscordEventListener";
+import commands from "./utils/commands";
+import rawListeners from "./listeners";
 
 new ErrorListener();
 
@@ -22,10 +22,13 @@ const bot = new Bot({
 });
 
 const listeners: DiscordEventListener[] = [];
-for (let i = 0; i < rawListeners.length; i++) {
-  listeners.push(new rawListeners[i](bot));
-}
 
-for (let i = 0; i < listeners.length; i++) {
-  bot.registerListener(listeners[i]);
-}
+rawListeners.then((loadedListeners) => {
+  for (let i = 0; i < loadedListeners.length; i++) {
+    listeners.push(new loadedListeners[i](bot));
+  }
+
+  for (let i = 0; i < listeners.length; i++) {
+    bot.registerListener(listeners[i]);
+  }
+});

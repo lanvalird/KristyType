@@ -9,14 +9,13 @@ type Listener = Array<new (bot: Bot) => DiscordEventListener>;
 const dir = join(__dirname, "discord");
 const files = readdirSync(dir).filter((file) => file.endsWith(".ts"));
 
-const listeners: Listener = [];
+const listeners: Promise<Listener> = Promise.all(
+  files.map(async (file) => {
+    const path = join(dir, file);
+    const listener = await import(path);
 
-for (let i = 0; i < files.length; i++) {
-  const file = files[i];
-  const path = join(dir, file);
-  const listener = import(path);
-
-  async () => listeners.push(await listener);
-}
+    return listener.default as new (bot: Bot) => DiscordEventListener;
+  }),
+);
 
 export default listeners;
