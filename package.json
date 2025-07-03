@@ -2,13 +2,18 @@
   "name": "kristytype",
   "version": "2.3.2",
   "description": "Kristy is a very simple and cute Discord bot",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "author": {
+    "name": "lanvalird",
+    "url": "https://lanvalird.ru/"
+  },
   "scripts": {
     "kristy:start": "ts-node src/index.ts",
     "kristy::migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts",
     "code::format": "prettier . -c -w"
   },
-  "author": "aculaOne",
-  "license": "MIT",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.55",
     "discord.js": "^14.15.3"
