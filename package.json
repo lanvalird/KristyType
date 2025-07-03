@@ -11,8 +11,8 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "dev": "nodemon src/index.ts",
+    "start": "ts-node .",
+    "dev": "nodemon",
     "utils:format": "prettier . -c -w",
     "utils::migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts"
   },

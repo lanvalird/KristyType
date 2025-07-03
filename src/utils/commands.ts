@@ -21,6 +21,9 @@ async function addCommands(dir: string) {
     .forEach((folder) => addCommands(join(dir, folder)));
 }
 
-addCommands(dir);
+async function getCommands(): Promise<Array<ICommand>> {
+  await addCommands(dir);
+  return commands;
+}
 
-export default commands;
+export default getCommands;
