@@ -9,26 +9,27 @@
     "name": "lanvalird",
     "url": "https://lanvalird.ru/"
   },
+  "main": "./src/index.ts",
   "scripts": {
-    "kristy:start": "ts-node src/index.ts",
-    "kristy::migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts",
-    "code::format": "prettier . -c -w"
+    "bot:start": "tsx .",
+    "bot:dev": "tsx watch .",
+    "utils:format": "prettier . -c -w",
+    "utils::migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts"
   },
   "dependencies": {
-    "@napi-rs/canvas": "^0.1.55",
-    "discord.js": "^14.15.3"
+    "@napi-rs/canvas": "^0.1.73",
+    "discord.js": "^14.21.0",
+    "dotenv": "^17.0.1"
   },
   "devDependencies": {
-    "@types/node": "^20.16.1",
+    "@types/node": "^20.19.4",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "dotenv": "^16.5.0",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
-    "prettier": "^3.3.3",
-    "ts-node": "^10.9.2",
+    "prettier": "^3.6.2",
     "tsconfig-paths": "^4.2.0",
-    "tslib": "^2.7.0",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
   "packageManager": "pnpm@10.7.0"
