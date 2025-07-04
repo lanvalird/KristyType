@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
+    "module": "commonjs",
     "rootDir": "./src/",
     "outDir": "./dist/",
     "strict": true,
@@ -25,6 +25,7 @@
       "@assets/*": ["src/assets/*"],
       "@types/*": ["src/types/*"],
       "@interfaces/*": ["src/interfaces/*"],
+      "@libs/*": ["src/libs/*"],
       "@utils/*": ["src/utils/*"]
     }
   },
