@@ -1,6 +1,6 @@
 {
   "name": "kristytype",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Kristy is a very simple and cute Discord bot",
   "license": "MIT",
   "private": true,
@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.73",
-    "discord.js": "^14.21.0"
+    "discord.js": "^14.21.0",
+    "random": "^5.4.1"
   },
   "devDependencies": {
     "@swc/core": "^1.12.9",
