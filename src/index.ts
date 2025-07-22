@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-import Bot from "./Bot";
+import Bot from "./bot";
 import ErrorListener from "./listeners/code/ErrorListener";
 import rawListeners from "./listeners";
 import getCommands from "./utils/commands";
@@ -21,6 +21,6 @@ const token = process.env.BOT_TOKEN;
 
   (await rawListeners).forEach(
     (listener: new (bot: Bot) => DiscordEventListener) =>
-      bot.registerListener(new listener(bot)),
+      bot.addListener(new listener(bot)),
   );
 })();

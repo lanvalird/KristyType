@@ -1,18 +1,18 @@
 import { Client, GatewayIntentBits } from "discord.js";
-import { Printer, PrinterColors } from "./libs/Printer";
-import { Config } from "./libs/Config";
-import { ICommand } from "./interfaces/ICommand";
-import DiscordBaseEventListener from "./listeners/DiscordEventListener";
-import { listeners } from "node:process";
-import DiscordEventListener from "./listeners/DiscordEventListener";
+import { ICommand } from "../interfaces/ICommand";
+import { Config } from "../libs/Config";
+import { Printer, PrinterColors } from "../libs/Printer";
+import DiscordBaseEventListener from "../listeners/DiscordEventListener";
+import RegisterListeners from "./RegisterListeners";
 
 export default class Bot {
-  private _config: Config;
-  private _listeners: DiscordBaseEventListener[] = [];
+  private readonly _config: Config;
 
-  public printer: Printer;
-  public client: Client;
-  public commands: ICommand[] = [];
+  protected readonly registerListeners: RegisterListeners;
+
+  public readonly printer: Printer;
+  public readonly client: Client;
+  public readonly commands: ICommand[] = [];
 
   constructor({
     token,
@@ -52,6 +52,8 @@ export default class Bot {
     this.client = this.create();
 
     this.login(token);
+
+    this.registerListeners = new RegisterListeners(this.client, this.printer);
   }
 
   public get config() {
@@ -79,45 +81,20 @@ export default class Bot {
       .catch(() => this.printer.error("Невалидный токен!"));
   }
 
-  public registerListener(listener: DiscordBaseEventListener) {
-    this.printer.print(
-      `регистрирую слушатель событий ${listener.object.event} (#${
-        this._listeners.length + 1
-      })…`,
-    );
-    this.client.on(listener.object.event, listener.object.action);
-    this._listeners.push(listener);
+  public addListener(listener: DiscordBaseEventListener) {
+    this.registerListeners.add(listener);
     return this;
   }
 
   public removeListener(listener: DiscordBaseEventListener) {
-    const index = this._listeners.findIndex(
-      (l) =>
-        l.object.event === listener.object.event &&
-        l.object.action === listener.object.action,
-    );
-
-    if (index || index === 0) {
-      this.printer.print(
-        `удаляю слушатель событий ${listener.object.event} (#${index + 1})…`,
-      );
-      this.client.off(listener.object.event, listener.object.action);
-      this._listeners[0].destroy();
-      this._listeners.splice(index, 1);
-    } else
-      this.printer.error(`слушатель ${listener.object.event} не был найден`);
+    this.registerListeners.remove(listener);
 
     return this;
   }
 
   public destroy() {
-    const repeat = this._listeners.length;
-    for (let i = repeat; i > 0; i--) {
-      const listener = this._listeners[0];
-      this.removeListener(listener);
-    }
-    this._listeners = [];
-    this.client.removeAllListeners();
+    this.registerListeners.removeAll();
+
     this.client.destroy();
   }
 }

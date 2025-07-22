@@ -1,6 +1,6 @@
 import DiscordBaseEventListener from "@listeners/DiscordEventListener";
 import { ActivityType, Events } from "discord.js";
-import Bot from "@src/Bot";
+import Bot from "@src/bot";
 import { IListener } from "@interfaces/IListener";
 import { PrinterColors } from "@src/libs/Printer";
 import { ActivityManager } from "@src/libs/ActivityManager";

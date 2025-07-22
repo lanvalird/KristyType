@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import { ICommand } from "@src/interfaces/ICommand";
 import { KristyCommandConfig } from "@src/interfaces/IKristyCommandConfig";
-import Bot from "@src/Bot";
+import Bot from "@src/bot";
 import { randomIntFromInterval } from "@src/utils/randomIntFromInterval";
 import { createCanvas } from "@napi-rs/canvas";
 

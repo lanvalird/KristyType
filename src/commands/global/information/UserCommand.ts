@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import { ICommand } from "@src/interfaces/ICommand";
 import { KristyCommandConfig } from "@src/interfaces/IKristyCommandConfig";
-import Bot from "@src/Bot";
+import Bot from "@src/bot";
 
 export default class UserCommand implements ICommand {
   public readonly discord: ChatInputApplicationCommandData = {

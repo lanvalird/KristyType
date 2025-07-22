@@ -1,4 +1,4 @@
-import Bot from "@src/Bot";
+import Bot from "@src/bot";
 import { IListener } from "@interfaces/IListener";
 
 export default abstract class DiscordEventListener implements IListener {

@@ -1,4 +1,4 @@
-import Bot from "@src/Bot";
+import Bot from "@src/bot";
 import { ICommand } from "@src/interfaces/ICommand";
 import { KristyCommandConfig } from "@src/interfaces/IKristyCommandConfig";
 import {

@@ -1,4 +1,4 @@
-import Bot from "@src/Bot";
+import Bot from "@src/bot";
 import { readdirSync } from "fs";
 import { join } from "path";
 
