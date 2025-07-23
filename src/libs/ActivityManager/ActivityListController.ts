@@ -1,14 +1,14 @@
-import { randomIntFromInterval } from "@src/utils/randomIntFromInterval";
-import fs from "node:fs";
+import { randomIntFromInterval as rnd } from "@src/utils/randomIntFromInterval";
+import { existsSync, lstatSync, readdirSync } from "node:fs";
 
-interface ActivityList {
+export interface ActivityList {
   name: string;
   prefix: string;
   enable: boolean;
   activities: string[];
 }
 
-export class ActivityManager {
+export class ActivityListController {
   private _activityLists: ActivityList[] = [];
 
   constructor(activitiesLists: ActivityList[]) {
@@ -23,30 +23,29 @@ export class ActivityManager {
     return this._activityLists;
   }
 
-  public addActivitiesList(list: ActivityList) {
+  public addActivitiesList(list: ActivityList): void {
     this._activityLists.push(list);
   }
 
-  public getRandomActivity() {
-    const list =
-      this._activityLists[
-        randomIntFromInterval(0, this._activityLists.length - 1)
-      ].activities;
-    const activity = list[randomIntFromInterval(0, list.length)];
+  public getRandomActivity(): string {
+    const index = rnd(0, this._activityLists.length - 1);
+    const { activities } = this._activityLists[index];
 
-    return activity;
+    return activities[rnd(0, activities.length)];
   }
 
   public async registerActivityList(path: string) {
-    if (!fs.existsSync(path)) return;
+    if (!existsSync(path)) return;
 
-    const isDir = fs.lstatSync(path).isDirectory();
-    const isFile = fs.lstatSync(path).isFile();
+    const stat = lstatSync(path);
+    const isDir = stat.isDirectory();
+    const isFile = stat.isFile();
+
     if (!isDir && !isFile)
       throw new Error("Parameter 'path' is not path to directory or file");
 
     if (isDir) {
-      const directory = fs.readdirSync(path, {
+      const directory = readdirSync(path, {
         withFileTypes: true,
         encoding: "utf8",
       });
