@@ -1,9 +1,9 @@
-import DiscordBaseEventListener from "@listeners/DiscordEventListener";
-import { ActivityType, Events } from "discord.js";
-import Bot from "@src/bot";
 import { IListener } from "@interfaces/IListener";
+import DiscordBaseEventListener from "@listeners/DiscordEventListener";
+import Bot from "@src/bot";
+import { ActivityListController } from "@src/libs/ActivityListController";
 import { PrinterColors } from "@src/libs/Printer";
-import { ActivityManager } from "@src/libs/ActivityManager";
+import { ActivityType, Events } from "discord.js";
 import { dirname, join } from "node:path";
 
 export default class ReadyListener
@@ -60,22 +60,26 @@ export default class ReadyListener
       PrinterColors.success,
     );
 
-    const activityManager = new ActivityManager([]);
-    activityManager.registerActivityList(
-      dirname(
-        join("src", "assets", "activities", "files", "default", "default.json"),
-      ),
+    const activityManager = new ActivityListController();
+    await activityManager.registerActivityLists(
+      join("src", "assets", "activities", "files"),
     );
 
-    this.intervalId = setInterval(async () => {
-      bot.client.user?.setActivity(await activityManager.getRandomActivity(), {
-        type: ActivityType.Custom,
-      });
-      bot.printer.print(
-        `сменил(-а) активность: "${bot.client.user?.presence.activities.map((act) => act.state)}".`,
-        PrinterColors.success,
-      );
-    }, 15_000);
+    this.intervalId = setInterval(
+      async () => {
+        bot.client.user?.setActivity(
+          await activityManager.getRandomActivity(),
+          {
+            type: ActivityType.Custom,
+          },
+        );
+        bot.printer.print(
+          `сменил(-а) активность: "${bot.client.user?.presence.activities.map((act) => act.state)}".`,
+          PrinterColors.success,
+        );
+      },
+      1_000 * 60 * 1, // 1 minute
+    );
   };
 
   constructor(bot: Bot) {

@@ -1,6 +1,6 @@
 import { randomIntFromInterval as rnd } from "@src/utils/randomIntFromInterval";
 import { promises as fs } from "node:fs";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 
 export interface ActivityList {
   name: string;
@@ -88,6 +88,37 @@ export class ActivityListController {
     }
   }
 
+  public async registerActivityLists(rootPath: string): Promise<void> {
+    try {
+      await this._registerActivityLists(rootPath);
+    } catch (err) {
+      console.error(`Error processing activities from ${rootPath}:`, err);
+      throw err;
+    }
+  }
+
+  private async _registerActivityLists(rootPath: string): Promise<void> {
+    try {
+      const items = await fs.readdir(rootPath, { withFileTypes: true });
+
+      await Promise.all(
+        items.map(async (dirent) => {
+          const fullPath = join(rootPath, dirent.name);
+
+          if (dirent.isDirectory()) {
+            await this.processActivityDirectory(fullPath);
+          }
+        }),
+      );
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException).code === "ENOENT") {
+        console.warn(`Activities directory not found: ${rootPath}`);
+        return;
+      }
+      throw err;
+    }
+  }
+
   private validateActivitiesLists(lists: ActivityList[]): ActivityList[] {
     if (!Array.isArray(lists)) {
       throw new Error("Activities lists must be an array");
@@ -131,6 +162,51 @@ export class ActivityListController {
     }
 
     await this.loadAndAddConfig(filePath);
+  }
+
+  private async processActivityDirectory(dirPath: string): Promise<void> {
+    try {
+      const items = await fs.readdir(dirPath, { withFileTypes: true });
+      const defaultConfigPath = join(dirPath, "default.json");
+
+      // Сначала загружаем default.json
+      if (items.some((item) => item.isFile() && item.name === "default.json")) {
+        await this.loadConfigFile(defaultConfigPath);
+      }
+
+      // Затем остальные JSON-файлы
+      await Promise.all(
+        items
+          .filter(
+            (item) =>
+              item.isFile() &&
+              item.name.endsWith(".json") &&
+              item.name !== "default.json",
+          )
+          .map((item) => this.loadConfigFile(join(dirPath, item.name))),
+      );
+    } catch (err) {
+      console.error(`Error processing activity directory ${dirPath}:`, err);
+      throw err;
+    }
+  }
+
+  private async loadConfigFile(filePath: string): Promise<void> {
+    try {
+      const imported = await import(filePath);
+      const config = imported.default || imported;
+
+      if (!config.prefix) {
+        // Автоматически устанавливаем префикс по имени папки
+        const dirName = basename(filePath.split("/").slice(-2)[0]);
+        config.prefix = dirName;
+      }
+
+      this.addActivitiesList(config);
+    } catch (err) {
+      console.error(`Error loading config file ${filePath}:`, err);
+      throw err;
+    }
   }
 
   private async loadAndAddConfig(filePath: string): Promise<void> {

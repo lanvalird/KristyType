@@ -1,4 +1,4 @@
-import { ActivityManager } from "./ActivityManager";
+import { ActivityManager } from "./ActivityListController";
 import { Config } from "./Config";
 import { Printer } from "./Printer";
 
