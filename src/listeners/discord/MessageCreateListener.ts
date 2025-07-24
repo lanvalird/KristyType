@@ -14,12 +14,13 @@ export default class MessageCreateListener
 
   private _loverId = process.env.KRISTY_LOVER_ID;
 
-  // ВРЕННО
+  // ВРЕМЕННО
   private _alc: ActivityListController = new ActivityListController();
 
   public action = async (message: Message): Promise<void> => {
     if (!this.bot.client.user?.id) return;
     if (message.author.id === this.bot.client.user.id) return;
+    if (!message.mentions.has(this.bot.client.user.id)) return;
 
     const botPermissions = (message.channel as TextChannel).permissionsFor(
       this.bot.client.user?.id,
