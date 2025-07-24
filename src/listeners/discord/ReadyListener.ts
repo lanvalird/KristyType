@@ -4,7 +4,7 @@ import Bot from "@src/bot";
 import { ActivityListController } from "@src/libs/ActivityListController";
 import { PrinterColors } from "@src/libs/Printer";
 import { ActivityType, Events } from "discord.js";
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 
 export default class ReadyListener
   extends DiscordBaseEventListener
