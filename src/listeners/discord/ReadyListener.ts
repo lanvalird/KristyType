@@ -67,8 +67,8 @@ export default class ReadyListener
       ),
     );
 
-    this.intervalId = setInterval(() => {
-      bot.client.user?.setActivity(activityManager.getRandomActivity(), {
+    this.intervalId = setInterval(async () => {
+      bot.client.user?.setActivity(await activityManager.getRandomActivity(), {
         type: ActivityType.Custom,
       });
       bot.printer.print(

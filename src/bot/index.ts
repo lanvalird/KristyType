@@ -76,9 +76,10 @@ export default class Bot {
 
   private login(token: string) {
     this.printer.print("производится вход…");
-    this.client
-      .login(token)
-      .catch(() => this.printer.error("Невалидный токен!"));
+    this.client.login(token).catch((err) => {
+      if (err instanceof Error)
+        this.printer.error("Произошла ошибка :::>   " + err.name);
+    });
   }
 
   public addListener(listener: DiscordBaseEventListener) {

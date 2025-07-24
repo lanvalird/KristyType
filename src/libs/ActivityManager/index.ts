@@ -8,7 +8,11 @@ export class ActivityManager {
   }
 
   public addActivityList(list: ActivityList) {
-    this._alc.addActivitiesList;
+    this._alc.addActivitiesList(list);
+  }
+
+  public getRandomActivityList() {
+    return this._alc.getRandomList();
   }
 
   public getRandomActivity() {
