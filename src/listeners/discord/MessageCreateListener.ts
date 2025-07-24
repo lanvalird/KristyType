@@ -14,42 +14,46 @@ export default class MessageCreateListener
 
   private _loverId = process.env.KRISTY_LOVER_ID;
 
+  // ВРЕННО
+  private _alc: ActivityListController = new ActivityListController();
+
   public action = async (message: Message): Promise<void> => {
     if (!this.bot.client.user?.id) return;
+    if (message.author.id === this.bot.client.user.id) return;
 
     const botPermissions = (message.channel as TextChannel).permissionsFor(
       this.bot.client.user?.id,
     );
 
-    if (
-      botPermissions?.has([
-        PermissionsBitField.Flags.SendMessages,
-        PermissionsBitField.Flags.SendMessagesInThreads,
-      ])
-    ) {
+    const hasSendMessagesPerms = botPermissions?.has([
+      PermissionsBitField.Flags.SendMessages,
+      PermissionsBitField.Flags.SendMessagesInThreads,
+    ]);
+
+    if (hasSendMessagesPerms) {
+      const nozhkiReg = new RegExp(/\/скинь([-_]*)ножки/gm);
+      const lowerMessageContent = message.content.toLowerCase();
+
       // Для локальной шутки
-      if (
-        new RegExp(/\/скинь([-_]*)ножки/gm).test(message.content.toLowerCase())
-      )
+      if (nozhkiReg.test(lowerMessageContent)) {
         message.reply("Извращенец!");
+        return;
+      }
 
       if (!this._loverId) return;
 
       if (message.author.id !== this._loverId) {
         setTimeout(
-          () => message.reply(`Я намерена общаться только с ${this._loverId}`),
+          () =>
+            message.reply(`Я намерена общаться только с <@${this._loverId}>`),
           1000,
         );
 
         (message.channel as TextChannel)?.sendTyping();
       } else {
-        // Временное решение
-        const alc = new ActivityListController();
-        const path = join(__dirname, "../", "activities", "files", "love");
-        await alc.registerActivityList(path);
-
         setTimeout(
-          async () => message.reply(await alc.getRandomActivity()),
+          // this._alc - ВРЕМЕННО
+          async () => message.reply(await this._alc.getRandomActivity()),
           1000,
         );
 
@@ -58,8 +62,22 @@ export default class MessageCreateListener
     }
   };
 
+  private async registerVoidyChatting() {
+    const path = join(
+      __dirname,
+      "../../",
+      "assets",
+      "activities",
+      "files",
+      "love",
+    );
+    await this._alc.registerActivityList(path);
+  }
+
   constructor(bot: Bot) {
     super(bot);
     this.bot = bot;
+
+    this.registerVoidyChatting();
   }
 }
