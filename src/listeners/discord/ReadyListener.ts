@@ -26,6 +26,8 @@ export default class ReadyListener
       PrinterColors.primary,
     );
 
+    bot.printer.print(`обновляю список команд".`, PrinterColors.primary);
+
     bot.client.application.commands.set(
       bot.commands
         .filter(
@@ -35,7 +37,20 @@ export default class ReadyListener
         )
         .map((c) => c.discord),
     );
-    if (process.env.BOT_GUILD_ID)
+    bot.printer.print(
+      `обновил(-а) глобальный список команд.`,
+      PrinterColors.success,
+    );
+
+    bot.printer.print(
+      `проверяю наличие команд для конкретной гильдии, если есть".`,
+    );
+    if (process.env.BOT_GUILD_ID) {
+      bot.printer.print(
+        `обновляю список локальных команд (гильдия)".`,
+        PrinterColors.primary,
+      );
+
       bot.client.application.commands
         .set(
           bot.commands
@@ -50,13 +65,19 @@ export default class ReadyListener
           ),
         );
 
+      bot.printer.print(
+        `процесс обновления команд окончен".`,
+        PrinterColors.success,
+      );
+    }
+
     // СМЕНА НА ПЕРВИЧНЫЙ СТАТУС
     bot.client.user.setStatus("dnd");
     bot.client.user?.setActivity("🔥 HotDev | Рефакторная версия", {
       type: ActivityType.Custom,
     });
     bot.printer.print(
-      `сменил(-а) статус (${bot.client.user.presence.status}), сбросил(-а) список команд и поставил(-а) базовую активность: "${bot.client.user.presence.activities.map((act) => act.state)}".`,
+      `сменил(-а) статус (${bot.client.user.presence.status}), и поставил(-а) базовую активность: "${bot.client.user.presence.activities.map((act) => act.state)}".`,
       PrinterColors.success,
     );
 
@@ -75,7 +96,7 @@ export default class ReadyListener
         );
         bot.printer.print(
           `сменил(-а) активность: "${bot.client.user?.presence.activities.map((act) => act.state)}".`,
-          PrinterColors.success,
+          PrinterColors.primary,
         );
       },
       1_000 * 60 * 1, // 1 minute
