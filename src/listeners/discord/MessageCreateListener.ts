@@ -13,6 +13,7 @@ export default class MessageCreateListener
   public event = Events.MessageCreate;
 
   private _loverId = process.env.KRISTY_LOVER_ID;
+  private theVoidChattingPause = false;
 
   // ВРЕМЕННО
   private _alc: ActivityListController = new ActivityListController();
@@ -52,9 +53,15 @@ export default class MessageCreateListener
 
         (message.channel as TextChannel)?.sendTyping();
       } else {
+        if (this.theVoidChattingPause) return;
+        this.theVoidChattingPause = true;
+
         setTimeout(
           // this._alc - ВРЕМЕННО
-          async () => message.reply(await this._alc.getRandomActivity()),
+          async () => (
+            message.reply(await this._alc.getRandomActivity()),
+            (this.theVoidChattingPause = false)
+          ),
           1000,
         );
 
@@ -70,9 +77,10 @@ export default class MessageCreateListener
       "assets",
       "activities",
       "files",
-      "love",
     );
-    await this._alc.registerActivityList(path);
+    await this._alc.registerActivityList(join(path, "love"));
+    await this._alc.registerActivityList(join(path, "feeling"));
+    await this._alc.registerActivityList(join(path, "music"));
   }
 
   constructor(bot: Bot) {
