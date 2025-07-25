@@ -47,7 +47,7 @@ export default class ReadyListener
     );
     if (process.env.BOT_GUILD_ID) {
       bot.printer.print(
-        `обновляю список локальных команд (гильдия)".`,
+        `обновляю список локальных команд (гильдия).`,
         PrinterColors.primary,
       );
 
@@ -60,13 +60,13 @@ export default class ReadyListener
         )
         .catch(() =>
           bot.printer.error(
-            "Не удалось выставить команды гильдии. Сервер " +
+            "Не удалось выставить команды гильдии. Сервер: " +
               process.env.BOT_GUILD_ID,
           ),
         );
 
       bot.printer.print(
-        `процесс обновления команд окончен".`,
+        `процесс обновления команд окончен.`,
         PrinterColors.success,
       );
     }
