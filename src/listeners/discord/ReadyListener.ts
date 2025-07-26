@@ -23,10 +23,10 @@ export default class ReadyListener
 
     bot.printer.print(
       `произведён вход от лица ${bot.client.user.username}. Подготавливаюсь…`,
-      PrinterColors.primary,
+      PrinterColors.Primary,
     );
 
-    bot.printer.print(`обновляю список команд".`, PrinterColors.primary);
+    bot.printer.print(`обновляю список команд".`, PrinterColors.Primary);
 
     bot.client.application.commands.set(
       bot.commands
@@ -39,7 +39,7 @@ export default class ReadyListener
     );
     bot.printer.print(
       `обновил(-а) глобальный список команд.`,
-      PrinterColors.success,
+      PrinterColors.Success,
     );
 
     bot.printer.print(
@@ -48,7 +48,7 @@ export default class ReadyListener
     if (process.env.BOT_GUILD_ID) {
       bot.printer.print(
         `обновляю список локальных команд (гильдия).`,
-        PrinterColors.primary,
+        PrinterColors.Primary,
       );
 
       bot.client.application.commands
@@ -67,7 +67,7 @@ export default class ReadyListener
 
       bot.printer.print(
         `процесс обновления команд окончен.`,
-        PrinterColors.success,
+        PrinterColors.Success,
       );
     }
 
@@ -78,7 +78,7 @@ export default class ReadyListener
     });
     bot.printer.print(
       `сменил(-а) статус (${bot.client.user.presence.status}), и поставил(-а) базовую активность: "${bot.client.user.presence.activities.map((act) => act.state)}".`,
-      PrinterColors.success,
+      PrinterColors.Success,
     );
 
     const activityManager = new ActivityListController();
@@ -96,7 +96,7 @@ export default class ReadyListener
         );
         bot.printer.print(
           `сменил(-а) активность: "${bot.client.user?.presence.activities.map((act) => act.state)}".`,
-          PrinterColors.primary,
+          PrinterColors.Primary,
         );
       },
       1_000 * 60 * 1, // 1 minute

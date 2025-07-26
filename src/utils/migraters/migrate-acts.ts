@@ -90,7 +90,7 @@ function migrate(
       JSON.stringify(exit, undefined, 2),
     );
 
-    pr.print(parent + act.name + ".json", PrinterColors.success);
+    pr.print(parent + act.name + ".json", PrinterColors.Success);
   });
 }
 

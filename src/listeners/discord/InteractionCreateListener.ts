@@ -23,7 +23,7 @@ export default class InteractionCreateListener
         if (e instanceof Error) {
           this.bot.printer.print(
             `Обнаружена ошибка! (${interaction.commandId})`,
-            PrinterColors.error,
+            PrinterColors.Error,
           );
           this.bot.printer.error(e.name + " – " + e.message);
         }

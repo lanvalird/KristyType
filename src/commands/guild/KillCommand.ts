@@ -82,7 +82,7 @@ export default class KillCommand implements ICommand {
     let exitSeconds = 10;
     this.bot.printer.print(
       `бот выключится через ${exitSeconds} секунд! (${interaction.options.data.find((el) => el.name === "reason")?.value ?? "Без причины"})`,
-      PrinterColors.primary,
+      PrinterColors.Primary,
     );
 
     const destroyClient = async () => {
@@ -90,7 +90,7 @@ export default class KillCommand implements ICommand {
         type: ActivityType.Custom,
       });
       await this.bot.destroy();
-      this.bot.printer.print("клиент уничтожен!", PrinterColors.success);
+      this.bot.printer.print("клиент уничтожен!", PrinterColors.Success);
 
       clearInterval(interval);
     };

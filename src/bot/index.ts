@@ -43,7 +43,7 @@ export default class Bot {
                   `    ${ni + 1}. ${c.discord.name} – ${c.discord.description}`,
               )
               .join("\n"),
-          PrinterColors.success,
+          PrinterColors.Success,
         );
         this.printer.error(`${commands[i]} (${i}) – ${err}`);
       }
