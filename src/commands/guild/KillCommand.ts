@@ -66,9 +66,9 @@ export default class KillCommand implements ICommand {
       .setDescription("Она устала…")
       .setThumbnail(client.user?.avatarURL() || null);
 
-    if (interaction.user.id != this.bot.config?.author.discordId) {
+    if (interaction.user.id != this.bot.getConfig().getAuthorDiscordId()) {
       await interaction.reply({
-        content: `Ты не похож на <@${this.bot.config?.author.discordId}>! Уйди!!!`,
+        content: `Ты не похож на <@${this.bot.getConfig().getAuthorDiscordId()}>! Уйди!!!`,
       });
 
       return;

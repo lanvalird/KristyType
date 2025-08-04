@@ -47,9 +47,9 @@ export default class BotCommand implements ICommand {
           name: "Версия",
           value:
             "``` " +
-            this.bot.config?.bot.version +
+            this.bot.getConfig().getBotVersion() +
             "-" +
-            this.bot.config?.bot.status +
+            this.bot.getConfig().getBotStatus() +
             " ```",
           inline: true,
         },

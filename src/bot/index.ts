@@ -27,6 +27,13 @@ export default class Bot {
 
     this.printer.print("загрузка конфигурации…");
     this._config = new Config(config?.path || "./src/config.json");
+    this._config
+      .load()
+      .catch((reason) =>
+        this.printer.error(
+          "конфиг не загружен (приложение продолжает работать): " + reason,
+        ),
+      );
 
     this.printer.print("инициализация экземпляра…");
 
@@ -58,6 +65,10 @@ export default class Bot {
 
   public get config() {
     return this._config?.getConfig();
+  }
+
+  public getConfig() {
+    return this._config;
   }
 
   private create() {
