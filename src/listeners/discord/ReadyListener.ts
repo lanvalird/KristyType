@@ -26,7 +26,7 @@ export default class ReadyListener
       PrinterColors.Primary,
     );
 
-    bot.printer.print(`обновляю список команд".`, PrinterColors.Primary);
+    bot.printer.print(`обновляю список команд.`, PrinterColors.Primary);
 
     bot.client.application.commands.set(
       bot.commands
@@ -43,7 +43,7 @@ export default class ReadyListener
     );
 
     bot.printer.print(
-      `проверяю наличие команд для конкретной гильдии, если есть".`,
+      `проверяю наличие команд для конкретной гильдии, если есть.`,
     );
     if (process.env.BOT_GUILD_ID) {
       bot.printer.print(
@@ -60,8 +60,9 @@ export default class ReadyListener
         )
         .catch(() =>
           bot.printer.error(
-            "Не удалось выставить команды гильдии. Сервер: " +
-              process.env.BOT_GUILD_ID,
+            `Не удалось выставить команды гильдии. Сервер: ${
+              process.env.BOT_GUILD_ID
+            }`,
           ),
         );
 
@@ -73,7 +74,7 @@ export default class ReadyListener
 
     this.setInitialActivity();
 
-    const activityManager = this.initActivityManager();
+    const activityManager = await this.initActivityManager();
 
     this.intervalId = setInterval(
       async () => {
@@ -98,17 +99,20 @@ export default class ReadyListener
   }
 
   private setInitialActivity(): void {
-    this.bot.client.user.setStatus("dnd");
-    this.bot.client.user?.setActivity("🔥 HotDev | Рефакторная версия", {
+    const botUser = this.bot.client.user;
+    botUser.setStatus("dnd");
+    botUser.setActivity("🔥 HotDev | Рефакторная версия", {
       type: ActivityType.Custom,
     });
-    bot.printer.print(
-      `сменил(-а) статус (${bot.client.user.presence.status}), и поставил(-а) базовую активность: "${bot.client.user.presence.activities.map((act) => act.state)}".`,
+    this.bot.printer.print(
+      `сменил(-а) статус (${botUser.presence.status}), и поставил(-а) базовую активность: "${botUser.presence.activities.map(
+        (act) => act.state,
+      )}".`,
       PrinterColors.Success,
     );
   }
 
-  private initActivityManager(): ActivityListController {
+  private async initActivityManager(): ActivityListController {
     const activityManager = new ActivityListController();
     await activityManager.registerActivityLists(
       join("src", "assets", "activities", "files"),
