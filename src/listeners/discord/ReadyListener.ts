@@ -71,21 +71,10 @@ export default class ReadyListener
       );
     }
 
-    // СМЕНА НА ПЕРВИЧНЫЙ СТАТУС
-    bot.client.user.setStatus("dnd");
-    bot.client.user?.setActivity("🔥 HotDev | Рефакторная версия", {
-      type: ActivityType.Custom,
-    });
-    bot.printer.print(
-      `сменил(-а) статус (${bot.client.user.presence.status}), и поставил(-а) базовую активность: "${bot.client.user.presence.activities.map((act) => act.state)}".`,
-      PrinterColors.Success,
-    );
+    this.setInitialActivity()
 
-    const activityManager = new ActivityListController();
-    await activityManager.registerActivityLists(
-      join("src", "assets", "activities", "files"),
-    );
-
+    const = activityManager = this.initActivityManager()
+    
     this.intervalId = setInterval(
       async () => {
         bot.client.user?.setActivity(
@@ -106,6 +95,26 @@ export default class ReadyListener
   constructor(bot: Bot) {
     super(bot);
     this.bot = bot;
+  }
+
+  private setInitialActivity(): void {
+    this.bot.client.user.setStatus("dnd");
+    this.bot.client.user?.setActivity("🔥 HotDev | Рефакторная версия", {
+      type: ActivityType.Custom,
+    });
+    bot.printer.print(
+      `сменил(-а) статус (${bot.client.user.presence.status}), и поставил(-а) базовую активность: "${bot.client.user.presence.activities.map((act) => act.state)}".`,
+      PrinterColors.Success,
+    );
+  }
+
+  private initActivityManager(): ActivityListController {
+    const activityManager = new ActivityListController();
+    await activityManager.registerActivityLists(
+      join("src", "assets", "activities", "files"),
+    );
+
+    return activityManager
   }
 
   public async destroy(): Promise<void> {
