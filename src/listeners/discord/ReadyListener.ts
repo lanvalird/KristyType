@@ -71,10 +71,10 @@ export default class ReadyListener
       );
     }
 
-    this.setInitialActivity()
+    this.setInitialActivity();
 
-    const = activityManager = this.initActivityManager()
-    
+    const activityManager = this.initActivityManager();
+
     this.intervalId = setInterval(
       async () => {
         bot.client.user?.setActivity(
@@ -114,7 +114,7 @@ export default class ReadyListener
       join("src", "assets", "activities", "files"),
     );
 
-    return activityManager
+    return activityManager;
   }
 
   public async destroy(): Promise<void> {
