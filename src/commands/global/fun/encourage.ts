@@ -4,10 +4,10 @@ import {
   ChatInputApplicationCommandData,
   AttachmentBuilder,
 } from "discord.js";
-import { ICommand } from "@src/interfaces/ICommand";
-import { KristyCommandConfig } from "@src/interfaces/IKristyCommandConfig";
-import Bot from "@src/bot/Bot";
-import { randomIntFromInterval } from "@src/utils/randomIntFromInterval";
+import { ICommand } from "@src/interfaces/command";
+import { KristyCommandConfig } from "@src/interfaces/kristy-command-config";
+import Bot from "@src/bot/bot";
+import { randomIntFromInterval } from "@src/utils/random-int-from-interval";
 import { createCanvas } from "@napi-rs/canvas";
 
 const words: string[] = [

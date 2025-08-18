@@ -1,7 +1,8 @@
-import { ActivityManager } from "./ActivityListController";
-import { Config } from "./Config";
-import { Printer } from "./Printer";
+import * as controllers from "./controllers";
 
-import type { PrinterColors } from "./Printer";
+import { Config } from "./config";
+import { Printer } from "./printer";
 
-export { ActivityManager, Config, Printer, PrinterColors };
+import type { PrinterColors } from "./printer";
+
+export { controllers, Config, Printer, PrinterColors };

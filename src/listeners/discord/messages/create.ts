@@ -1,11 +1,11 @@
-import DiscordBaseEventListener from "@listeners/DiscordEventListener";
+import DiscordBaseEventListener from "@src/data/discord-event";
 import { Events, Message, PermissionsBitField, TextChannel } from "discord.js";
-import Bot from "@src/bot/Bot";
-import { IMessageListener } from "@src/interfaces/IMessageListener";
-import { ActivityListController } from "@src/libs/ActivityListController";
+import Bot from "@src/bot/bot";
+import { IMessageListener } from "@src/interfaces/listeners";
+import { ActivityListController } from "@src/libs/controllers/activity-list";
 import { join } from "path";
 
-export default class MessageCreateListener
+export class MessageCreateListener
   extends DiscordBaseEventListener
   implements IMessageListener
 {

@@ -1,8 +1,8 @@
 import { Client, ClientOptions, GatewayIntentBits } from "discord.js";
-import { ICommand } from "../interfaces/ICommand";
-import { Config } from "../libs/Config";
-import { Printer, PrinterColors } from "../libs/Printer";
-import ListenersManager from "./ListenersManager";
+import { ICommand } from "../interfaces/command";
+import { Config } from "../libs/config";
+import { Printer, PrinterColors } from "../libs/printer";
+import ListenersManager from "./listeners-manager";
 
 export default class Bot {
   private readonly _config: Config;

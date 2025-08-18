@@ -1,4 +1,4 @@
-import { IConfigFile } from "@src/interfaces/IConfigFile";
+import { IConfigFile } from "@src/interfaces/config-file";
 import { readFile } from "fs/promises";
 import { join } from "path";
 

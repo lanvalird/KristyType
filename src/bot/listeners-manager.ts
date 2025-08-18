@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
-import { Printer } from "../libs/Printer";
-import DiscordBaseEventListener from "../listeners/DiscordEventListener";
-import Bot from "./Bot";
+import { Printer } from "../libs/printer";
+import DiscordBaseEventListener from "../data/discord-event";
+import Bot from "./bot";
 
 export default class RegisterListeners {
   private _listeners: DiscordBaseEventListener[] = [];

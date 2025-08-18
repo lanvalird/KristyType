@@ -1,7 +1,7 @@
 import { lstatSync, readdirSync } from "fs";
 import { join } from "path";
 
-import type { ICommand } from "../interfaces/ICommand";
+import type { ICommand } from "../interfaces/command";
 
 const dir = join(__dirname, "../", "commands");
 const commands: Array<ICommand> = [];

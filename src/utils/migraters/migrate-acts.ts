@@ -8,7 +8,7 @@
 
 import fs from "fs";
 import path from "path";
-import { Printer, PrinterColors } from "../../libs/Printer";
+import { Printer, PrinterColors } from "../../libs/printer";
 
 const pr = new Printer("MIGRATER", "");
 

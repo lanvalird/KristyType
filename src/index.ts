@@ -1,10 +1,10 @@
 import "dotenv/config";
 
 import { Bot } from "./bot";
-import ErrorListener from "./listeners/code/ErrorListener";
-import rawListeners from "./listeners";
+import { ErrorListener } from "./listeners/code";
+import rawListeners from "./data/listeners";
 import getCommands from "./utils/commands";
-import DiscordEventListener from "./listeners/DiscordEventListener";
+import { DiscordEventListener } from "./data/listeners";
 import { GatewayIntentBits } from "discord.js";
 
 new ErrorListener();

@@ -1,12 +1,12 @@
 import { IListener } from "@interfaces/IListener";
-import DiscordBaseEventListener from "@listeners/DiscordEventListener";
-import Bot from "@src/bot/Bot";
-import { ActivityListController } from "@src/libs/ActivityListController";
-import { PrinterColors } from "@src/libs/Printer";
+import DiscordBaseEventListener from "@src/data/discord-event";
+import Bot from "@src/bot/bot";
+import { ActivityListController } from "@src/libs/controllers/activity-list";
+import { PrinterColors } from "@src/libs/printer";
 import { ActivityType, Events } from "discord.js";
 import { join } from "node:path";
 
-export default class ReadyListener
+export class ReadyListener
   extends DiscordBaseEventListener
   implements IListener
 {

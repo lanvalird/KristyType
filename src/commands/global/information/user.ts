@@ -7,9 +7,9 @@ import {
   GuildMemberRoleManager,
   ChatInputApplicationCommandData,
 } from "discord.js";
-import { ICommand } from "@src/interfaces/ICommand";
-import { KristyCommandConfig } from "@src/interfaces/IKristyCommandConfig";
-import Bot from "@src/bot/Bot";
+import { ICommand } from "@src/interfaces/command";
+import { KristyCommandConfig } from "@src/interfaces/kristy-command-config";
+import Bot from "@src/bot/bot";
 
 export default class UserCommand implements ICommand {
   public readonly discord: ChatInputApplicationCommandData = {

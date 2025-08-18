@@ -1,3 +1,3 @@
-import Bot from "./Bot";
+import Bot from "./bot";
 
 export { Bot };

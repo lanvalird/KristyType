@@ -1,6 +1,6 @@
-import { Printer } from "@src/libs/Printer";
+import { Printer } from "@src/libs/printer";
 
-export default class ErrorListener {
+export class ErrorListener {
   public printer = new Printer("ОТЛАДЧИК");
   private handler = (error: Error) => {
     if (error instanceof Error) {

@@ -6,10 +6,10 @@ import {
   ApplicationCommandOptionType,
   ChatInputApplicationCommandData,
 } from "discord.js";
-import { ICommand } from "@src/interfaces/ICommand";
-import { KristyCommandConfig } from "@src/interfaces/IKristyCommandConfig";
-import Bot from "@src/bot/Bot";
-import { PrinterColors } from "@src/libs/Printer";
+import { ICommand } from "@src/interfaces/command";
+import { KristyCommandConfig } from "@src/interfaces/kristy-command-config";
+import Bot from "@src/bot/bot";
+import { PrinterColors } from "@src/libs/printer";
 
 export default class KillCommand implements ICommand {
   public readonly discord: ChatInputApplicationCommandData = {
