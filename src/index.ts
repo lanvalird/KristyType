@@ -1,10 +1,11 @@
 import "dotenv/config";
 
-import Bot from "./bot";
+import { Bot } from "./bot";
 import ErrorListener from "./listeners/code/ErrorListener";
 import rawListeners from "./listeners";
 import getCommands from "./utils/commands";
 import DiscordEventListener from "./listeners/DiscordEventListener";
+import { GatewayIntentBits } from "discord.js";
 
 new ErrorListener();
 
@@ -17,10 +18,20 @@ const token = process.env.BOT_TOKEN;
     token,
     commands,
     config: { name: "Kristy", path: "./src/config.json" },
+    createOptions: {
+      intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildVoiceStates,
+        GatewayIntentBits.GuildPresences,
+      ],
+    },
   });
 
   (await rawListeners).forEach(
     (listener: new (bot: Bot) => DiscordEventListener) =>
-      bot.addListener(new listener(bot)),
+      bot.listeners.add(new listener(bot)),
   );
 })();

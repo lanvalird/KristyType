@@ -1,15 +1,16 @@
 import { Client } from "discord.js";
 import { Printer } from "../libs/Printer";
 import DiscordBaseEventListener from "../listeners/DiscordEventListener";
+import Bot from "./Bot";
 
 export default class RegisterListeners {
   private _listeners: DiscordBaseEventListener[] = [];
   protected readonly client: Client;
   protected readonly printer: Printer;
 
-  constructor(client: Client, printer: Printer) {
-    this.client = client;
-    this.printer = printer;
+  constructor(bot: Bot) {
+    this.client = bot.client;
+    this.printer = bot.printer;
   }
 
   public add(listener: DiscordBaseEventListener) {

@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import { ICommand } from "@src/interfaces/ICommand";
 import { KristyCommandConfig } from "@src/interfaces/IKristyCommandConfig";
-import Bot from "@src/bot";
+import Bot from "@src/bot/Bot";
 import { PrinterColors } from "@src/libs/Printer";
 
 export default class KillCommand implements ICommand {
@@ -66,9 +66,9 @@ export default class KillCommand implements ICommand {
       .setDescription("Она устала…")
       .setThumbnail(client.user?.avatarURL() || null);
 
-    if (interaction.user.id != this.bot.getConfig().getAuthorDiscordId()) {
+    if (interaction.user.id != this.bot.getConfigClass().getAuthorDiscordId()) {
       await interaction.reply({
-        content: `Ты не похож на <@${this.bot.getConfig().getAuthorDiscordId()}>! Уйди!!!`,
+        content: `Ты не похож на <@${this.bot.getConfigClass().getAuthorDiscordId()}>! Уйди!!!`,
       });
 
       return;

@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import { ICommand } from "@src/interfaces/ICommand";
 import { KristyCommandConfig } from "@src/interfaces/IKristyCommandConfig";
-import Bot from "@src/bot";
+import Bot from "@src/bot/Bot";
 
 export default class BotCommand implements ICommand {
   public readonly discord: ChatInputApplicationCommandData = {
@@ -47,9 +47,9 @@ export default class BotCommand implements ICommand {
           name: "Версия",
           value:
             "``` " +
-            this.bot.getConfig().getBotVersion() +
+            this.bot.getConfigClass().getBotVersion() +
             "-" +
-            this.bot.getConfig().getBotStatus() +
+            this.bot.getConfigClass().getBotStatus() +
             " ```",
           inline: true,
         },

@@ -1,6 +1,6 @@
 import DiscordBaseEventListener from "@listeners/DiscordEventListener";
 import { Events, Message, PermissionsBitField, TextChannel } from "discord.js";
-import Bot from "@src/bot";
+import Bot from "@src/bot/Bot";
 import { IMessageListener } from "@src/interfaces/IMessageListener";
 import { ActivityListController } from "@src/libs/ActivityListController";
 import { join } from "path";

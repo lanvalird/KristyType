@@ -1,4 +1,4 @@
-import Bot from "@src/bot";
+import Bot from "@src/bot/Bot";
 import { IInteractionListener } from "@src/interfaces/IInteractionListener";
 import { Events, Interaction } from "discord.js";
 import { PrinterColors } from "@src/libs/Printer";
