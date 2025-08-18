@@ -1,11 +1,11 @@
 import Bot from "@src/bot/bot";
 import { IInteractionListener } from "@src/interfaces/listeners";
-import { Events, Interaction } from "discord.js";
 import { PrinterColors } from "@src/libs/printer";
-import DiscordBaseEventListener from "../../../data/discord-event";
+import { Events, Interaction } from "discord.js";
+import { DiscordEventListener } from "../event";
 
 export class InteractionCreateListener
-  extends DiscordBaseEventListener
+  extends DiscordEventListener
   implements IInteractionListener
 {
   protected bot: Bot;

@@ -2,10 +2,9 @@ import "dotenv/config";
 
 import { Bot } from "./bot";
 import { ErrorListener } from "./listeners/code";
-import rawListeners from "./data/listeners";
 import getCommands from "./utils/commands";
-import { DiscordEventListener } from "./data/listeners";
 import { GatewayIntentBits } from "discord.js";
+import { ReadyListener } from "./listeners/discord/client";
 
 new ErrorListener();
 
@@ -30,8 +29,5 @@ const token = process.env.BOT_TOKEN;
     },
   });
 
-  (await rawListeners).forEach(
-    (listener: new (bot: Bot) => DiscordEventListener) =>
-      bot.listeners.add(new listener(bot)),
-  );
+  bot.listeners.add(ReadyListener);
 })();

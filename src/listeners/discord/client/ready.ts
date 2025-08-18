@@ -1,15 +1,12 @@
-import { IListener } from "@interfaces/IListener";
-import DiscordBaseEventListener from "@src/data/discord-event";
-import Bot from "@src/bot/bot";
+import { IListener } from "@interfaces/listeners";
+import { Bot } from "@src/bot";
 import { ActivityListController } from "@src/libs/controllers/activity-list";
 import { PrinterColors } from "@src/libs/printer";
 import { ActivityType, Events } from "discord.js";
 import { join } from "node:path";
+import { DiscordEventListener } from "../event";
 
-export class ReadyListener
-  extends DiscordBaseEventListener
-  implements IListener
-{
+export class ReadyListener extends DiscordEventListener implements IListener {
   private intervalId: NodeJS.Timeout | null = null;
 
   protected bot: Bot;
@@ -100,19 +97,19 @@ export class ReadyListener
 
   private setInitialActivity(): void {
     const botUser = this.bot.client.user;
-    botUser.setStatus("dnd");
-    botUser.setActivity("🔥 HotDev | Рефакторная версия", {
+    botUser?.setStatus("dnd");
+    botUser?.setActivity("🔥 HotDev | Рефакторная версия", {
       type: ActivityType.Custom,
     });
     this.bot.printer.print(
-      `сменил(-а) статус (${botUser.presence.status}), и поставил(-а) базовую активность: "${botUser.presence.activities.map(
+      `сменил(-а) статус (${botUser?.presence.status}), и поставил(-а) базовую активность: "${botUser?.presence.activities.map(
         (act) => act.state,
       )}".`,
       PrinterColors.Success,
     );
   }
 
-  private async initActivityManager(): ActivityListController {
+  private async initActivityManager(): Promise<ActivityListController> {
     const activityManager = new ActivityListController();
     await activityManager.registerActivityLists(
       join("src", "assets", "activities", "files"),
