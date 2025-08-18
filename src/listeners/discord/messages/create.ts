@@ -71,7 +71,7 @@ export class MessageCreateListener
   };
 
   private async registerVoidyChatting() {
-    const path = join(__dirname, "../../", "assets", "activities", "files");
+    const path = join(__dirname, "../../../", "assets", "activities", "files");
     await this._alc.registerActivityList(join(path, "love"));
     await this._alc.registerActivityList(join(path, "feeling"));
     await this._alc.registerActivityList(join(path, "music"));

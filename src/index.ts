@@ -1,10 +1,16 @@
 import "dotenv/config";
 
-import { Bot } from "./bot";
-import { ErrorListener } from "./listeners/code";
-import getCommands from "./utils/commands";
 import { GatewayIntentBits } from "discord.js";
+
+import { Bot } from "./bot";
+
+import { ErrorListener } from "./listeners/code";
+
 import { ReadyListener } from "./listeners/discord/client";
+import { InteractionCreateListener } from "./listeners/discord/interactions";
+import { MessageCreateListener } from "./listeners/discord/messages";
+
+import getCommands from "./utils/commands";
 
 new ErrorListener();
 
@@ -30,4 +36,6 @@ const token = process.env.BOT_TOKEN;
   });
 
   bot.listeners.add(new ReadyListener(bot));
+  bot.listeners.add(new InteractionCreateListener(bot));
+  bot.listeners.add(new MessageCreateListener(bot));
 })();
