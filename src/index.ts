@@ -29,5 +29,5 @@ const token = process.env.BOT_TOKEN;
     },
   });
 
-  bot.listeners.add(ReadyListener);
+  bot.listeners.add(new ReadyListener(bot));
 })();

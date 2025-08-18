@@ -1,10 +1,10 @@
+import { DiscordEventListener } from "@src/listeners/discord/event";
 import { Client } from "discord.js";
 import { Printer } from "../libs/printer";
-import DiscordBaseEventListener from "../data/discord-event";
 import Bot from "./bot";
 
 export default class RegisterListeners {
-  private _listeners: DiscordBaseEventListener[] = [];
+  private _listeners: DiscordEventListener[] = [];
   protected readonly client: Client;
   protected readonly printer: Printer;
 
@@ -13,7 +13,7 @@ export default class RegisterListeners {
     this.printer = bot.printer;
   }
 
-  public add(listener: DiscordBaseEventListener) {
+  public add(listener: DiscordEventListener) {
     this.printer.print(
       `регистрирую слушатель событий ${listener.object.event} (#${
         this._listeners.length + 1
@@ -24,7 +24,7 @@ export default class RegisterListeners {
     return this;
   }
 
-  public remove(listener: DiscordBaseEventListener) {
+  public remove(listener: DiscordEventListener) {
     const index = this._listeners.findIndex(
       (l) =>
         l.object.event === listener.object.event &&
