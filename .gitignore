@@ -1,7 +1,6 @@
 # My files
 start.bat
 prisma/migrations/**
-src/assets/activities/files/**
 
 # Generated files
 src/generated
@@ -138,3 +137,4 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+/.vs
