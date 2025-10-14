@@ -1,0 +1,20 @@
+{
+  "author": {
+    "name": "Valentin Bird",
+    "username": "lanvalird",
+    "discordId": "827928352131252245"
+  },
+  "bot": {
+    "clientId": "1164228812217790565",
+    "version": "2.8.0",
+    "status": "alpha",
+    "guild": {
+      "id": "1168636395246592081",
+      "link": "https://discord.gg/bc68RsHwpH"
+    },
+    "website": "https://lanvalird.ru/projects/kristy"
+  },
+  "api": {
+    "url": ""
+  }
+}
