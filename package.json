@@ -1,6 +1,6 @@
 {
   "name": "kristytype",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "description": "Kristy is a very simple and cute Discord bot",
   "license": "MIT",
   "private": true,
@@ -13,8 +13,7 @@
   "scripts": {
     "start": "ts-node .",
     "dev": "nodemon",
-    "utils:format": "prettier . -c -w",
-    "utils::migrate:acts": "ts-node src/utils/migraters/migrate-acts.ts"
+    "utils:format": "prettier . -c -w"
   },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.73",

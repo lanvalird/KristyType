@@ -1,4 +1,4 @@
-import { randomIntFromInterval as rnd } from "@src/utils/random-int-from-interval";
+import { randomIntFromInterval as rnd } from "@src/libs/utils/random-int-from-interval";
 import { promises as fs } from "node:fs";
 import { basename, join } from "node:path";
 

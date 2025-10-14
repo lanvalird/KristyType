@@ -10,7 +10,7 @@ import { ReadyListener } from "./listeners/discord/client";
 import { InteractionCreateListener } from "./listeners/discord/interactions";
 import { MessageCreateListener } from "./listeners/discord/messages";
 
-import getCommands from "./utils/commands";
+import getCommands from "./libs/utils/commands";
 
 new ErrorListener();
 
