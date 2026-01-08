@@ -1,6 +1,6 @@
-import { Events, GatewayIntentBits } from "discord.js";
-import { Bot } from "../client/index.js";
-import { DEFAULT_BOT_INTENTS } from "../lib/constants.js";
+import { Events, type GatewayIntentBits } from 'discord.js';
+import { Bot } from '../client/index.js';
+import { DEFAULT_BOT_INTENTS } from '../lib/constants.js';
 
 export class Application {
   private bot: Bot;

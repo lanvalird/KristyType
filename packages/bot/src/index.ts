@@ -1,7 +1,7 @@
-import "dotenv/config";
+import 'dotenv/config';
 
-import { Application } from "./app/index.js";
+import { Application } from './app/index.js';
 
-const botToken = process.env.DISCORD_BOT_TOKEN || "";
+const botToken = process.env.DISCORD_BOT_TOKEN || '';
 const app = new Application(botToken);
 app.run();

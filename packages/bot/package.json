@@ -7,7 +7,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "start": "node dist/index.js",
-    "lint": "biome check --apply ./src",
+    "lint": "biome check --write ./src",
     "format": "biome format --write ./src",
     "type-check": "tsc --noEmit"
   },
