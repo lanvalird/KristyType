@@ -1,7 +1,3 @@
-# My files
-start.bat
-prisma/migrations/**
-
 # Generated files
 src/generated
 
