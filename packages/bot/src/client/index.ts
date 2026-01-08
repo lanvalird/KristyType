@@ -8,8 +8,16 @@ export class Bot extends Client {
   }
 
   public static validateToken(botToken: string): boolean {
-    if (!botToken || botToken.trim() === ' ') {
-      throw new Error('Token is not valid (empty)');
+    const jwtRegex = /^[A-Za-z0-9_-]{2,}(?:\.[A-Za-z0-9_-]{2,}){2}$/;
+
+    try {
+      if (!botToken || botToken.trim() === ' ') {
+        throw 'Empty';
+      } else if (!jwtRegex.test(botToken)) {
+        throw 'Not JWT';
+      }
+    } catch (e) {
+      throw new Error(`Invalid Token: ${e}`);
     }
 
     return true;
