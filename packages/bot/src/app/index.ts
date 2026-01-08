@@ -11,7 +11,7 @@ export class Application {
     botToken: string,
     botIntents: GatewayIntentBits[] = DEFAULT_BOT_INTENTS
   ) {
-    /** @todo Добавить валидацию */
+    Bot.validateToken(botToken);
     this.botToken = botToken;
     this.bot = new Bot({ intents: botIntents });
   }
