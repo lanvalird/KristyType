@@ -19,6 +19,9 @@ export class Application {
   public run() {
     this.bot.on(Events.ClientReady, Bot.onReady);
     this.bot.login(this.botToken);
+  }
+
+  public stop() {
     this.bot.destroy();
   }
 }
