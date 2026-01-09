@@ -4,14 +4,10 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    include: ['tests/**/*.test.ts'],
+    include: ['tests/**/*.spec.ts'],
     coverage: {
       reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/',
-        'tests/',
-        '**/*.d.ts'
-      ]
+      exclude: ['node_modules/', 'tests/', '**/*.d.ts'],
     },
     mockReset: true,
     restoreMocks: true,
