@@ -1,4 +1,5 @@
 import { Client, PresenceUpdateStatus } from 'discord.js';
+import { isEmpty } from '../lib/utils.js';
 
 /** It wraps the client class with `discord.js` for a better experience */
 export class Bot extends Client {
@@ -11,9 +12,10 @@ export class Bot extends Client {
     const jwtRegex = /^[A-Za-z0-9_-]{2,}(?:\.[A-Za-z0-9_-]{2,}){2}$/;
 
     try {
-      if (!botToken || botToken.trim() === ' ') {
+      if (isEmpty(botToken)) {
         throw 'Empty';
-      } else if (!jwtRegex.test(botToken)) {
+      }
+      if (!jwtRegex.test(botToken)) {
         throw 'Not JWT';
       }
     } catch (e) {
