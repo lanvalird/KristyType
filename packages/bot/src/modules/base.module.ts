@@ -16,7 +16,7 @@ interface IEvent {
 }
 
 export abstract class BaseModule implements IModule {
-  public abstract readonly name: string
+  public abstract readonly name: string;
   public readonly dependencies: string[] = [];
   protected bot!: Bot;
   protected events: IEvent[] = [];
@@ -24,7 +24,7 @@ export abstract class BaseModule implements IModule {
   public async initialize(bot: Bot): Promise<void> {
     this.bot = bot;
     await this.setup();
-    await this.registerEvents()
+    await this.registerEvents();
   }
 
   abstract setup(): Promise<void>;
