@@ -64,47 +64,47 @@ export class Bot extends Client {
   }
 
   public onCustomEvent(eventName: string, handler: Function): void {
-  if (!this._customEventHandlers.has(eventName)) {
-    this._customEventHandlers.set(eventName, []);
+    if (!this._customEventHandlers.has(eventName)) {
+      this._customEventHandlers.set(eventName, []);
+    }
+    this._customEventHandlers.get(eventName)!.push(handler);
   }
-  this._customEventHandlers.get(eventName)!.push(handler);
-}
 
-public offCustomEvent(eventName: string, handler: Function): void {
-  const handlers = this._customEventHandlers.get(eventName);
-  if (!handlers) return;
-  
-  const index = handlers.indexOf(handler);
-  if (index > -1) {
-    handlers.splice(index, 1);
-  }
-  
-  if (handlers.length === 0) {
-    this._customEventHandlers.delete(eventName);
-  }
-}
+  public offCustomEvent(eventName: string, handler: Function): void {
+    const handlers = this._customEventHandlers.get(eventName);
+    if (!handlers) return;
 
-public clearCustomEventHandlers(eventName?: string): void {
-  if (eventName) {
-    this._customEventHandlers.delete(eventName);
-  } else {
-    this._customEventHandlers.clear();
-  }
-}
+    const index = handlers.indexOf(handler);
+    if (index > -1) {
+      handlers.splice(index, 1);
+    }
 
-public dispatchCustomEvent(eventName: string, ...args: any[]): void {
-  const handlers = this._customEventHandlers.get(eventName);
-  if (!handlers) return;
-  
-  for (const handler of handlers) {
-    try {
-      const result = handler(...args);
-      if (result instanceof Promise) {
-        result.catch(console.error);
-      }
-    } catch (error) {
-      console.error(`Error in event handler for ${eventName}:`, error);
+    if (handlers.length === 0) {
+      this._customEventHandlers.delete(eventName);
     }
   }
-}
+
+  public clearCustomEventHandlers(eventName?: string): void {
+    if (eventName) {
+      this._customEventHandlers.delete(eventName);
+    } else {
+      this._customEventHandlers.clear();
+    }
+  }
+
+  public dispatchCustomEvent(eventName: string, ...args: any[]): void {
+    const handlers = this._customEventHandlers.get(eventName);
+    if (!handlers) return;
+
+    for (const handler of handlers) {
+      try {
+        const result = handler(...args);
+        if (result instanceof Promise) {
+          result.catch(console.error);
+        }
+      } catch (error) {
+        console.error(`Error in event handler for ${eventName}:`, error);
+      }
+    }
+  }
 }
