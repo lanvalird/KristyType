@@ -1,16 +1,38 @@
-import { Client, ClientOptions, PresenceUpdateStatus } from 'discord.js';
+import type { ClientOptions } from 'discord.js';
+import type { IModule } from '../modules/base.module.js';
+import { Client, PresenceUpdateStatus } from 'discord.js';
 import { isEmpty } from '../lib/utils.js';
-import { IModule } from '../modules/base.module.js';
+
+interface IBot {
+  registerModule: (module: IModule) => Promise<void>;
+  unregisterModule: (name: string) => Promise<void>;
+  getModule: <T extends IModule>(name: string) => T | undefined;
+
+  registerAppEvent: (
+    eventName: string,
+    handler: (...args: never[]) => void
+  ) => void;
+  unregisterAppEvent: (
+    eventName: string,
+    handler: (...args: never[]) => void
+  ) => void;
+  clearAppEvents: (eventName?: string) => void;
+  dispatchCustomEvent: (eventName: string, ...args: never[]) => void;
+
+  client: Client<true>;
+}
 
 /** It wraps the client class with `discord.js` for a better experience */
-export class Bot extends Client {
+export class Bot implements IBot {
+  private _client: Client<true>;
   private _modules: Map<string, IModule>;
-  private _customEventHandlers: Map<string, Function[]>;
+  private _handlers: Map<string, Array<(...args: never[]) => void>>;
 
-  constructor(options: ClientOptions) {
-    super(options);
+  constructor(clientOptions: ClientOptions) {
     this._modules = new Map();
-    this._customEventHandlers = new Map();
+    this._handlers = new Map();
+
+    this._client = new Client(clientOptions);
   }
 
   public static onReady(readyClient: Client<true>) {
@@ -31,6 +53,10 @@ export class Bot extends Client {
       throw new Error(`Invalid Token: ${e}`);
     }
     return true;
+  }
+
+  get client() {
+    return this._client;
   }
 
   public async registerModule(module: IModule): Promise<void> {
@@ -63,15 +89,15 @@ export class Bot extends Client {
     return this._modules.get(name) as T;
   }
 
-  public onCustomEvent(eventName: string, handler: Function): void {
-    if (!this._customEventHandlers.has(eventName)) {
-      this._customEventHandlers.set(eventName, []);
+  public registerAppEvent(eventName: string, handler: (...args: never[]) => void): void {
+    if (!this._handlers.has(eventName)) {
+      this._handlers.set(eventName, []);
     }
-    this._customEventHandlers.get(eventName)!.push(handler);
+    this._handlers.get(eventName)!.push(handler);
   }
 
-  public offCustomEvent(eventName: string, handler: Function): void {
-    const handlers = this._customEventHandlers.get(eventName);
+  public unregisterAppEvent(eventName: string, handler: (...args: never[]) => void): void {
+    const handlers = this._handlers.get(eventName);
     if (!handlers) return;
 
     const index = handlers.indexOf(handler);
@@ -80,27 +106,27 @@ export class Bot extends Client {
     }
 
     if (handlers.length === 0) {
-      this._customEventHandlers.delete(eventName);
+      this._handlers.delete(eventName);
     }
   }
 
-  public clearCustomEventHandlers(eventName?: string): void {
+  public clearAppEvents(eventName?: string): void {
     if (eventName) {
-      this._customEventHandlers.delete(eventName);
+      this._handlers.delete(eventName);
     } else {
-      this._customEventHandlers.clear();
+      this._handlers.clear();
     }
   }
 
-  public dispatchCustomEvent(eventName: string, ...args: any[]): void {
-    const handlers = this._customEventHandlers.get(eventName);
+  public dispatchCustomEvent(eventName: string, ...args: never[]): void {
+    const handlers = this._handlers.get(eventName);
     if (!handlers) return;
 
     for (const handler of handlers) {
       try {
         const result = handler(...args);
-        if (result instanceof Promise) {
-          result.catch(console.error);
+        if ((result as unknown) instanceof Promise) {
+          (result as unknown as Promise<unknown>).catch(console.error);
         }
       } catch (error) {
         console.error(`Error in event handler for ${eventName}:`, error);

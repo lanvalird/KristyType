@@ -1,4 +1,4 @@
-import { Bot } from '../client/index.js';
+import type { Bot } from '../client/index.js';
 
 export interface IModule {
   readonly name: string;
