@@ -1,10 +1,12 @@
-import { Events, type GatewayIntentBits } from 'discord.js';
-import { Bot } from '../client/index.js';
+import type { IBot } from '../interfaces/bot.js';
+import type { GatewayIntentBits } from 'discord.js';
+import { Events } from 'discord.js';
 import { DEFAULT_BOT_INTENTS } from '../lib/constants.js';
+import { Bot } from '../client/index.js';
 
 /** The root application class for launching the bot */
 export class Application {
-  private bot: Bot;
+  private bot: IBot;
   private botToken: string;
 
   constructor(

@@ -1,26 +1,9 @@
 import type { ClientOptions } from 'discord.js';
 import type { IModule } from '../modules/base.module.js';
+import type { IBot } from '../interfaces/bot.js';
+
 import { Client, PresenceUpdateStatus } from 'discord.js';
 import { isEmpty } from '../lib/utils.js';
-
-interface IBot {
-  registerModule: (module: IModule) => Promise<void>;
-  unregisterModule: (name: string) => Promise<void>;
-  getModule: <T extends IModule>(name: string) => T | undefined;
-
-  registerAppEvent: (
-    eventName: string,
-    handler: (...args: never[]) => void
-  ) => void;
-  unregisterAppEvent: (
-    eventName: string,
-    handler: (...args: never[]) => void
-  ) => void;
-  clearAppEvents: (eventName?: string) => void;
-  dispatchCustomEvent: (eventName: string, ...args: never[]) => void;
-
-  client: Client<true>;
-}
 
 /** It wraps the client class with `discord.js` for a better experience */
 export class Bot implements IBot {
@@ -89,14 +72,20 @@ export class Bot implements IBot {
     return this._modules.get(name) as T;
   }
 
-  public registerAppEvent(eventName: string, handler: (...args: never[]) => void): void {
+  public registerAppEvent(
+    eventName: string,
+    handler: (...args: never[]) => void
+  ): void {
     if (!this._handlers.has(eventName)) {
       this._handlers.set(eventName, []);
     }
     this._handlers.get(eventName)!.push(handler);
   }
 
-  public unregisterAppEvent(eventName: string, handler: (...args: never[]) => void): void {
+  public unregisterAppEvent(
+    eventName: string,
+    handler: (...args: never[]) => void
+  ): void {
     const handlers = this._handlers.get(eventName);
     if (!handlers) return;
 
